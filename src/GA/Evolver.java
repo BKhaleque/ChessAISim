@@ -46,12 +46,15 @@ public class Evolver {
         }
 
         for(int i =0; i < gen0.size(); i++){
-            if(gen0.get(i).fitness)
+            if(gen0.get(i).fitness >= 0.4){
+                feasible.add(gen0.add(i));
+            }
+            if(gen0.get(i).fitness <= 0.1){
+                infeasible.add(gen0.get(i));
+            }
         }
 
-        double mutationChance = 0.05;
 
-        //add gen 0 games to  feasible population
 
 
         int index1;
@@ -60,8 +63,13 @@ public class Evolver {
         //mate gen0 parents outside of loop
         index1 = randomGenerator.nextInt(gen0.size());
         index2 = randomGenerator.nextInt(gen0.size());
-        GameRules feasibleParent1; //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
-        GameRules feasibleParent2;
+
+
+        for(int i = 0; i<10; i ++){
+            GameRules feasibleParent1; //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
+            GameRules feasibleParent2;
+        }
+
         //GameRules infeasibleParent1 = pickParent();
         //GameRules infeasibleParent2 = pickParent();
 
