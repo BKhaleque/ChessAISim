@@ -47,7 +47,7 @@ public class Evolver {
 
         for(int i =0; i < gen0.size(); i++){
             if(gen0.get(i).fitness >= 0.4){
-                feasible.add(gen0.add(i));
+                feasible.add(gen0.get(i));
             }
             if(gen0.get(i).fitness <= 0.1){
                 infeasible.add(gen0.get(i));
@@ -64,11 +64,55 @@ public class Evolver {
         index1 = randomGenerator.nextInt(gen0.size());
         index2 = randomGenerator.nextInt(gen0.size());
 
+        GameRules feasibleChild = new GameRules();
+        for(int i = 0; i<100; i ++){
+            GameRules feasibleParent1 = pickParent1(feasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
+            GameRules feasibleParent2 = pickParent2(feasible, feasibleParent1);
+            feasibleChild = mate(feasibleParent1, feasibleParent2);
+            GameRules infeasibleParent1 = pickParent1(infeasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
+            GameRules infeasibleParent2 = pickParent2(infeasible, infeasibleParent1);
+            GameRules infeasibleChild = mate(infeasibleParent1, infeasibleParent2);
+            float feasibleChildFitness = determineFitness(feasibleChild);
+            float infeasibleChildFitness = determineFitness(infeasibleChild);
+            ArrayList<GameRules> newFeasiblePop = new ArrayList<>();
+            ArrayList<GameRules> newInfeasiblePop = new ArrayList<>();
 
-        for(int i = 0; i<10; i ++){
-            GameRules feasibleParent1; //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
-            GameRules feasibleParent2;
+            if(feasibleChildFitness >0.4f){
+                newFeasiblePop.add(feasibleChild);
+            }else {
+                newInfeasiblePop.add(feasibleChild);
+            }
+
+            if(infeasibleChildFitness >0.4f){
+                newFeasiblePop.add(infeasibleChild);
+            }else {
+                newInfeasiblePop.add(infeasibleChild);
+            }
+
+            for(int x =0; x < feasible.size(); x++){
+                if(feasible.get(x).fitness >= 0.4){
+                    newFeasiblePop.add(feasible.get(x));
+                }
+                if(feasible.get(x).fitness <= 0.1){
+                    newInfeasiblePop.add(feasible.get(x));
+                }
+            }
+            for(int y =0; y < infeasible.size(); y++){
+                if(infeasible.get(y).fitness >= 0.4){
+                    newFeasiblePop.add(infeasible.get(y));
+                }
+                if(infeasible.get(y).fitness <= 0.1){
+                    newInfeasiblePop.add(infeasible.get(y));
+                }
+            }
+
+            feasible = newFeasiblePop;
+            infeasible = newInfeasiblePop;
+
+
         }
+
+        return feasibleChild;
 
         //GameRules infeasibleParent1 = pickParent();
         //GameRules infeasibleParent2 = pickParent();
@@ -168,7 +212,7 @@ public class Evolver {
     }
 
     public float determineFitness(GameRules gameRules){
-        int iter = 2;
+        int iter = 10;
         float player1Score = 0;
         int draw = 0;
         int whiteWins = 0;
@@ -181,7 +225,7 @@ public class Evolver {
             board.lossOnCheckmate = gameRules.lossOnCheckmate;
 
             //System.out.println(board.toString());
-            Player player1 = new AlphaBetaPlayer(Piece.WHITE,3);
+            Player player1 = new AlphaBetaPlayer(Piece.WHITE,2);
             //Player player2 = new RandomPlayer(Piece.BLACK);
             Player player2 = new AlphaBetaPlayer(Piece.BLACK,1);
             //Player player2 = new DeterministicPlayer(Piece.BLACK);
@@ -219,9 +263,9 @@ public class Evolver {
         GameRules game1= new GameRules();
         ArrayList<Integer> noOfPieces = new ArrayList<>();
         int pieces = 0;
-        int totalSpaces = 16;
+        int totalSpaces = 15;
 
-        for(int i =0; i<6; i++){
+        for(int i =0; i<5; i++){
             if(totalSpaces<=0){
                 noOfPieces.add(0);
                 continue;
@@ -232,12 +276,12 @@ public class Evolver {
 
         }
 
-        game1.setKings(noOfPieces.get(0));
-        game1.setPawns(noOfPieces.get(1));
-        game1.setQueens(noOfPieces.get(2));
-        game1.setKnights(noOfPieces.get(3));
-        game1.setRooks(noOfPieces.get(4));
-        game1.setBishops(noOfPieces.get(5));
+        game1.setKings(1);
+        game1.setPawns(noOfPieces.get(0));
+        game1.setQueens(noOfPieces.get(1));
+        game1.setKnights(noOfPieces.get(2));
+        game1.setRooks(noOfPieces.get(3));
+        game1.setBishops(noOfPieces.get(4));
         if (getRandomNumberInRange(0,1) == 1)
             game1.setCanStepOnDifferentColor(true);
         else
@@ -268,7 +312,8 @@ public class Evolver {
         while(true) {
             if(turn++ > 200)
                 return 0;
-
+            System.out.println("Playing a game!");
+            System.out.println(b);
             move = player1.getNextMove(b);
             if(move == null && b.isCheck(player1.getColour()) && b.lossOnCheckmate) // check and can't move
                 return -1;
@@ -460,9 +505,7 @@ public class Evolver {
                     child.paralysedOnAttack = true;
                 }
                 break;
-            case 9:
-                child.setKings(child.getKings()+1);
-                break;
+
         }
 
     }

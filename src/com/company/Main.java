@@ -3,6 +3,8 @@
  */
 package com.company;
 
+import GA.Evolver;
+import GA.GameRules;
 import chessSimulation.Board;
 import chessSimulation.Move;
 import chessSimulation.player.*;
@@ -16,6 +18,10 @@ import chessSimulation.pieces.*;
 public class Main {
 	
 	public static void main(String[] args) {
+
+		Evolver e = new Evolver();
+		GameRules someGame =e.evolve();
+		System.out.println(someGame);
 
 
 }
