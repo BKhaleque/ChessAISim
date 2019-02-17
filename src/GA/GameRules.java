@@ -15,9 +15,11 @@ public class GameRules {
     boolean canStepOnDifferentColor;
     boolean lossOnCheckmate;
     boolean kingLostLast;
-    boolean paralysedOnAttack;
+   // boolean paralysedOnAttack;
     boolean feasible;
     float fitness;
+
+    float probability;
 
     public GameRules(int pawns, int queens, int knights, int rooks, int bishops, boolean canStepOnDifferntColor, boolean lossOnCheckmate, boolean kingLostLast, boolean paralysedOnAttack, boolean feasible) {
         this.pawns = pawns;
@@ -28,7 +30,7 @@ public class GameRules {
         this.canStepOnDifferentColor = canStepOnDifferntColor;
         this.lossOnCheckmate = lossOnCheckmate;
         this.kingLostLast = kingLostLast;
-        this.paralysedOnAttack = paralysedOnAttack;
+        //this.paralysedOnAttack = paralysedOnAttack;
         this.feasible = feasible;
 
     }
@@ -123,13 +125,13 @@ public class GameRules {
         this.kingLostLast = kingLostLast;
     }
 
-    public Boolean getParalysedOnAttack() {
-        return paralysedOnAttack;
-    }
+   // public Boolean getParalysedOnAttack() {
+    //    return paralysedOnAttack;
+   // }
 
-    public void setParalysedOnAttack(Boolean paralysedOnAttack) {
-        this.paralysedOnAttack = paralysedOnAttack;
-    }
+  //  public void setParalysedOnAttack(Boolean paralysedOnAttack) {
+   //     this.paralysedOnAttack = paralysedOnAttack;
+   // }
 
     public Boolean getFeasible() {
         return feasible;

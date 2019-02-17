@@ -10,6 +10,7 @@ import GA.GameRules;
 import javafx.scene.Parent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Evolver {
@@ -25,6 +26,7 @@ public class Evolver {
         ArrayList<GameRules> gen0 = new ArrayList<>();
         //declare how many generations to evolve for
         int generations = 1000;
+        float minFitness = 0.4f;
 
         //declare rulespace of inital games for generation 0 in game objects, traits must be assigned with random values and add to gen0 population
         for (int i = 0; i < 10; i++) {
@@ -65,7 +67,8 @@ public class Evolver {
         index2 = randomGenerator.nextInt(gen0.size());
 
         GameRules feasibleChild = new GameRules();
-        for(int i = 0; i<100; i ++){
+        for(int i = 0; i<generations; i ++){
+            ///put in s loop to generate new population
             GameRules feasibleParent1 = pickParent1(feasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
             GameRules feasibleParent2 = pickParent2(feasible, feasibleParent1);
             feasibleChild = mate(feasibleParent1, feasibleParent2);
@@ -108,6 +111,7 @@ public class Evolver {
 
             feasible = newFeasiblePop;
             infeasible = newInfeasiblePop;
+            //take best individual and carry over, make other 9 through mating
 
 
         }
@@ -143,7 +147,6 @@ public class Evolver {
 
        // child = mate(parent1, parent2);
 
-        //todo implement tournament for parent selection, check fitness and compare, pick highest fitness parent
 
         //then determine quality
 
@@ -191,15 +194,22 @@ public class Evolver {
     }
 
     public GameRules pickParent1(ArrayList<GameRules> pop){
-        GameRules parent1 = pop.get(0);
+        Random r = new Random();
+        GameRules game1 = pop.get(r.nextInt(pop.size()));
+        GameRules game2 = pop.get(r.nextInt(pop.size()));
+        GameRules game3 = pop.get(r.nextInt(pop.size()));
+        //order list by parent's fitness's
+        GameRules hightestFitnes;
+        if(game1.fitness>= game2.fitness && game1.fitness>=game3.fitness){
+            hightestFitnes = game1
+        }else if(game1.fitness>= game2.fitness && game1.fitness>=game3.fitness){
 
-        for(int i =0; i<pop.size(); i++){
-            if(parent1.fitness < pop.get(i).fitness){
-                parent1 = pop.get(i);
-            }
         }
 
-        return parent1;
+
+
+
+            return game;
     }
     public GameRules pickParent2(ArrayList<GameRules> pop, GameRules parent1){
         GameRules parent2 = pop.get(0);
@@ -297,17 +307,16 @@ public class Evolver {
         else
             game1.setKingLostLast(false);
 
-        if (getRandomNumberInRange(0,1) == 1)
-            game1.setParalysedOnAttack(true);
-        else
-            game1.setParalysedOnAttack(false);
+       // if (getRandomNumberInRange(0,1) == 1)
+        //    game1.setParalysedOnAttack(true);
+       // else
+        //    game1.setParalysedOnAttack(false);
 
         return game1;
     }
 
     public static int play(Player player1, Player player2, Board b) {
         Move move;
-        int result;
         int turn = 0;
         while(true) {
             if(turn++ > 200)
@@ -324,10 +333,8 @@ public class Evolver {
             if(move == null) // no check but can't move
                 return 0;
 
-            result = b.makeMove(move);
+            b.makeMove(move);
             System.out.println(b);
-            //if(result == -1) return (player1.getColour() == Piece.WHITE) ? -1 : 1; // black wins
-            //if(result == 1) return (player1.getColour() == Piece.WHITE) ? 1 : -1; // white wins
 
 
             move = player2.getNextMove(b);
@@ -340,10 +347,8 @@ public class Evolver {
             if(move == null) // no check but can't move
                 return 0;
 
-            result = b.makeMove(move);
+            b.makeMove(move);
             System.out.println(b);
-            //if(result == -1) return (player1.getColour() == Piece.WHITE) ? 1 : -1; // black wins
-            //if(result == 1) return (player1.getColour() == Piece.WHITE) ? -1 : 1; // white wins
 
         }
     }
@@ -425,12 +430,12 @@ public class Evolver {
                 child.setKingLostLast(parent.getKingLostLast());
                 break;
 
-            case 8:
-                child.setParalysedOnAttack(parent.getParalysedOnAttack());
-                break;
-            case 9:
-                child.setKings(parent.getKings());
-                break;
+          //  case 8:
+             //   child.setParalysedOnAttack(parent.getParalysedOnAttack());
+            //    break;
+          //  case 9:
+           //     child.setKings(parent.getKings());
+           //     break;
         }
     }
     public void mutate(int trait, GameRules child){
@@ -498,13 +503,13 @@ public class Evolver {
                     child.kingLostLast = true;
                 }                break;
 
-            case 8:
-                if(child.paralysedOnAttack){
-                    child.paralysedOnAttack = false;
-                }else{
-                    child.paralysedOnAttack = true;
-                }
-                break;
+           // case 8:
+           ////     if(child.paralysedOnAttack){
+              //      child.paralysedOnAttack = false;
+              //  }else{
+              //      child.paralysedOnAttack = true;
+              //  }
+              //  break;
 
         }
 
