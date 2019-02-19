@@ -27,9 +27,10 @@ public class Evolver {
         //declare how many generations to evolve for
         int generations = 1000;
         float minFitness = 0.4f;
+        int initialPopSize = 10;
 
         //declare rulespace of inital games for generation 0 in game objects, traits must be assigned with random values and add to gen0 population
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i <initialPopSize; i++) {
             gen0.add(generateGame());
             //determine generated games fitness
             gen0.get(i).fitness = determineFitness(gen0.get(i));
@@ -45,7 +46,7 @@ public class Evolver {
         if(child.getKings() ==0){
             child.feasible = false;
             infeasible.add(child);
-        }
+        } //If there are no kings then a game is infeasible
 
         for(int i =0; i < gen0.size(); i++){
             if(gen0.get(i).fitness >= 0.4){
@@ -59,53 +60,58 @@ public class Evolver {
 
 
 
-        int index1;
-        int index2;
 
-        //mate gen0 parents outside of loop
-        index1 = randomGenerator.nextInt(gen0.size());
-        index2 = randomGenerator.nextInt(gen0.size());
 
         GameRules feasibleChild = new GameRules();
         for(int i = 0; i<generations; i ++){
             ///put in s loop to generate new population
-            GameRules feasibleParent1 = pickParent1(feasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
-            GameRules feasibleParent2 = pickParent2(feasible, feasibleParent1);
-            feasibleChild = mate(feasibleParent1, feasibleParent2);
-            GameRules infeasibleParent1 = pickParent1(infeasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
-            GameRules infeasibleParent2 = pickParent2(infeasible, infeasibleParent1);
-            GameRules infeasibleChild = mate(infeasibleParent1, infeasibleParent2);
-            float feasibleChildFitness = determineFitness(feasibleChild);
-            float infeasibleChildFitness = determineFitness(infeasibleChild);
             ArrayList<GameRules> newFeasiblePop = new ArrayList<>();
             ArrayList<GameRules> newInfeasiblePop = new ArrayList<>();
 
-            if(feasibleChildFitness >0.4f){
-                newFeasiblePop.add(feasibleChild);
-            }else {
-                newInfeasiblePop.add(feasibleChild);
-            }
 
-            if(infeasibleChildFitness >0.4f){
-                newFeasiblePop.add(infeasibleChild);
-            }else {
-                newInfeasiblePop.add(infeasibleChild);
-            }
+            for(int z = 0; z<initialPopSize; z++) {
+                GameRules feasibleParent1 = pickParent1(feasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
+                GameRules feasibleParent2 = pickParent2(feasible, feasibleParent1);
+                feasibleChild = mate(feasibleParent1, feasibleParent2);
+                GameRules infeasibleParent1 = pickParent1(infeasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
+                GameRules infeasibleParent2 = pickParent2(infeasible, infeasibleParent1);
+                GameRules infeasibleChild = mate(infeasibleParent1, infeasibleParent2);
+                float feasibleChildFitness = determineFitness(feasibleChild);
+                float infeasibleChildFitness = determineFitness(infeasibleChild);
 
-            for(int x =0; x < feasible.size(); x++){
-                if(feasible.get(x).fitness >= 0.4){
-                    newFeasiblePop.add(feasible.get(x));
+                if(child.getKings() ==0){
+                    child.feasible = false;
+                    infeasible.add(child);
+                } //If there are no kings then a game is infeasible
+
+                if (feasibleChildFitness > 0.4f) {
+                    newFeasiblePop.add(feasibleChild);
+                } else {
+                    newInfeasiblePop.add(feasibleChild);
                 }
-                if(feasible.get(x).fitness <= 0.1){
-                    newInfeasiblePop.add(feasible.get(x));
+
+                if (infeasibleChildFitness > 0.4f) {
+                    newFeasiblePop.add(infeasibleChild);
+                } else {
+                    newInfeasiblePop.add(infeasibleChild);
                 }
-            }
-            for(int y =0; y < infeasible.size(); y++){
-                if(infeasible.get(y).fitness >= 0.4){
-                    newFeasiblePop.add(infeasible.get(y));
+
+                //elitism checks, take only top value N, each time
+                for (int x = 0; x < feasible.size(); x++) {
+                    if (feasible.get(x).fitness >= 0.4) {
+                        newFeasiblePop.add(feasible.get(x));
+                    }
+                    if (feasible.get(x).fitness >= 0.4) {
+                        newInfeasiblePop.add(feasible.get(x));
+                    }
                 }
-                if(infeasible.get(y).fitness <= 0.1){
-                    newInfeasiblePop.add(infeasible.get(y));
+                for (int y = 0; y < infeasible.size(); y++) {
+                    if (infeasible.get(y).fitness >= 0.4) {
+                        newFeasiblePop.add(infeasible.get(y));
+                    }
+                    if (infeasible.get(y).fitness >= 0.4) {
+                        newInfeasiblePop.add(infeasible.get(y));
+                    }
                 }
             }
 
@@ -118,79 +124,6 @@ public class Evolver {
 
         return feasibleChild;
 
-        //GameRules infeasibleParent1 = pickParent();
-        //GameRules infeasibleParent2 = pickParent();
-
-
-
-       // feasibleParent1 = feasible.get(0);
-       // feasibleParent2 = feasible.get(0);
-
-       // for(int i = 0; i< feasible.size(); i++){
-
-        //    if (feasible.get(i).getFitness() > feasibleParent1.getFitness() ){
-        //        feasibleParent1 = feasible.get(i);
-        //    }
-
-       // }
-
-      //  for(int i = 0; i< feasible.size(); i++){
-
-         //   if (feasible.get(i).getFitness() > feasibleParent2.getFitness() && !feasible.get(i).equals(feasibleParent1) ){
-        //        feasibleParent2 = feasible.get(i);
-        //    }
-
-       // }
-
-
-       // GameRules child = new GameRules();
-
-       // child = mate(parent1, parent2);
-
-
-        //then determine quality
-
-        //child.determineQuality();
-
-
-        /*
-        for (int i = 0; i<generations; i++) {
-            feasibleOrNot = randomGenerator.nextInt(2);
-            if(feasibleOrNot == 0) {
-                index1 = randomGenerator.nextInt(feasible.size());
-                index2 = randomGenerator.nextInt(feasible.size());
-                parent1 = feasible.get(index1);
-                parent2 = feasible.get(index2);
-            }else if(feasibleOrNot == 1){
-                index1 = randomGenerator.nextInt(infeasible.size());
-                index2 = randomGenerator.nextInt(feasible.size());
-                parent1 = infeasible.get(index1);
-                parent2 = feasible.get(index2);
-            }else{
-                index1 = randomGenerator.nextInt(infeasible.size());
-                index2 = randomGenerator.nextInt(infeasible.size());
-                parent1 = infeasible.get(index1);
-                parent2 = infeasible.get(index2);
-            }
-            child = mate(parent1, parent2);
-            feasible.add(child);
-            //determineFitness(child);
-            //if child is fit, add to feasible pop, if not add to unfeasible pop
-        }
-        */
-
-        //debugging purposes
-        /*
-        System.out.println(child.getKings());
-        System.out.println(child.getKnights());
-        System.out.println(child.getPawns());
-        System.out.println(child.getRooks());
-        System.out.println(child.getParalysedOnAttack());
-        System.out.println(child.getKingLostLast());
-        System.out.println(child.getQueens());
-        System.out.println(child.getBishops());
-        System.out.println(child.getCanStepOnDifferentColor());
-        */
     }
 
     public GameRules pickParent1(ArrayList<GameRules> pop){
@@ -198,30 +131,47 @@ public class Evolver {
         GameRules game1 = pop.get(r.nextInt(pop.size()));
         GameRules game2 = pop.get(r.nextInt(pop.size()));
         GameRules game3 = pop.get(r.nextInt(pop.size()));
-        //order list by parent's fitness's
-        GameRules hightestFitnes;
         if(game1.fitness>= game2.fitness && game1.fitness>=game3.fitness){
-            hightestFitnes = game1
-        }else if(game1.fitness>= game2.fitness && game1.fitness>=game3.fitness){
-
+            return game1;
+        }else if(game2.fitness>= game1.fitness && game2.fitness>=game3.fitness){
+            return game2;
         }
 
+            return game3;
 
 
 
-            return game;
+
+
+
     }
     public GameRules pickParent2(ArrayList<GameRules> pop, GameRules parent1){
-        GameRules parent2 = pop.get(0);
-        for(int i =0; i<pop.size(); i++){
-            if(parent2.fitness<pop.get(i).fitness && !pop.get(i).equals(parent1)){
-                parent2 = pop.get(i);
-            }
+        Random r = new Random();
+        GameRules game1 = pop.get(r.nextInt(pop.size()));
+        GameRules game2 = pop.get(r.nextInt(pop.size()));
+        GameRules game3 = pop.get(r.nextInt(pop.size()));
+        while (game1.equals(parent1) || game2.equals(parent1) || game3.equals(parent1)) {
+            game1 = pop.get(r.nextInt(pop.size()));
+            game2 = pop.get(r.nextInt(pop.size()));
+            game3 = pop.get(r.nextInt(pop.size()));
+
+
         }
-        return parent2;
+        if(game1.fitness>= game2.fitness && game1.fitness>=game3.fitness){
+            return game1;
+        }else if(game2.fitness>= game1.fitness && game2.fitness>=game3.fitness){
+            return game2;
+        }
+
+            return game3;
+
     }
 
     public float determineFitness(GameRules gameRules){
+        //add piece count  stable piece count higher fitness
+        //if oe plyer loses a lot of pieces quickly
+        //play with a mix of strong and weap bots, strong vs strong must be more ven, weak vs strong must favour strong
+        //maybe view move list each turn determine avg number of actions through all turns, higher avg determines higher ftiness
         int iter = 10;
         float player1Score = 0;
         int draw = 0;
@@ -275,7 +225,7 @@ public class Evolver {
         int pieces = 0;
         int totalSpaces = 15;
 
-        for(int i =0; i<5; i++){
+        for(int i =0; i<6; i++){
             if(totalSpaces<=0){
                 noOfPieces.add(0);
                 continue;
@@ -286,12 +236,12 @@ public class Evolver {
 
         }
 
-        game1.setKings(1);
-        game1.setPawns(noOfPieces.get(0));
-        game1.setQueens(noOfPieces.get(1));
-        game1.setKnights(noOfPieces.get(2));
-        game1.setRooks(noOfPieces.get(3));
-        game1.setBishops(noOfPieces.get(4));
+        game1.setKings(noOfPieces.get(0));
+        game1.setPawns(noOfPieces.get(1));
+        game1.setQueens(noOfPieces.get(2));
+        game1.setKnights(noOfPieces.get(3));
+        game1.setRooks(noOfPieces.get(4));
+        game1.setBishops(noOfPieces.get(5));
         if (getRandomNumberInRange(0,1) == 1)
             game1.setCanStepOnDifferentColor(true);
         else
@@ -371,7 +321,6 @@ public class Evolver {
         //random int to determine
         int length1= randomGenerator.nextInt(8);
 
-        float mutationChance = 0.05f;
 
 
         //set traits of random length from parent1 and 2

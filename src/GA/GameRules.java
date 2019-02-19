@@ -52,6 +52,7 @@ public class GameRules {
     }
 
     public void setPawns(int pawns) {
+        this.totalPieces -=this.pawns;
         this.pawns = pawns;
         this.totalPieces +=pawns;
     }
@@ -61,6 +62,8 @@ public class GameRules {
     }
 
     public void setQueens(int queens) {
+        this.totalPieces -=this.queens;
+
         this.queens = queens;
         this.totalPieces +=queens;
     }
@@ -70,6 +73,8 @@ public class GameRules {
     }
 
     public void setKnights(int knights) {
+        this.totalPieces -=this.knights;
+
         this.knights = knights;
         this.totalPieces+=knights;
     }
@@ -79,6 +84,8 @@ public class GameRules {
     }
 
     public void setRooks(int rooks) {
+        this.totalPieces -=this.rooks;
+
         this.rooks = rooks;
         this.totalPieces+=rooks;
     }
@@ -88,6 +95,8 @@ public class GameRules {
     }
 
     public void setBishops(int bishops) {
+        this.totalPieces -=this.bishops;
+
         this.bishops = bishops;
         this.totalPieces+=bishops;
     }
@@ -97,6 +106,8 @@ public class GameRules {
     }
 
     public void setKings(int kings) {
+        this.totalPieces -=this.kings;
+
         this.kings = kings;
         this.totalPieces +=totalPieces;
     }
