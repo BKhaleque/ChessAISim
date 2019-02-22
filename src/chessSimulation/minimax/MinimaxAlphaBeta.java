@@ -68,7 +68,7 @@ public class MinimaxAlphaBeta {
 			return eval1(b, state, !colour);
 		
 		ArrayList<Move> moves = b.getMovesAfter(!colour, state);
-		if(moves.size() == 0) // TODO add draw
+		if(moves.size() == 0)
 			return Float.POSITIVE_INFINITY;
 		
 		for(int i = 0; i < moves.size(); i++) {
@@ -100,7 +100,7 @@ public class MinimaxAlphaBeta {
 		if(moves.size() == 0)
 			return null;
  		
-		Vector<Future<Float>> costs = new Vector<Future<Float>>(moves.size());
+		Vector<Future<Float>> costs = new Vector<>(moves.size());
 		costs.setSize(moves.size());
 		
  		ExecutorService exec = Executors.newFixedThreadPool(moves.size());
@@ -150,7 +150,7 @@ public class MinimaxAlphaBeta {
  		
  		return moves.get(maxi);
 	}
-	
+	/*
 	public Move SingleThreadDecision(Board b) {
 		// get maximum move
 		
@@ -183,7 +183,8 @@ public class MinimaxAlphaBeta {
  		else
  			return moves.get(maxi);
 	}
-	
+	*/
+	/*
 	private float eval2(Board b, ArrayList<Move> moves, boolean currentColor) {
 		Square[][] squares = b.getSquaresAfter(moves);
 		
@@ -214,7 +215,7 @@ public class MinimaxAlphaBeta {
 				return Float.NEGATIVE_INFINITY;
 		}
 		
-		
+		*/
 			
 		
 		int whiteScore = 0;
