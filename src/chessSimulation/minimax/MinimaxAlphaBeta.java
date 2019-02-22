@@ -214,8 +214,7 @@ public class MinimaxAlphaBeta {
 			if(blackKing == false)
 				return Float.NEGATIVE_INFINITY;
 		}
-		
-		*/
+
 			
 		
 		int whiteScore = 0;
@@ -236,7 +235,7 @@ public class MinimaxAlphaBeta {
 		else
 			return blackScore - whiteScore;
 	}
-	
+	*/
 	
 	private float eval1(Board b, ArrayList<Move> moves, boolean currentColor) {
 		Square[][] squares = b.getSquaresAfter(moves);
