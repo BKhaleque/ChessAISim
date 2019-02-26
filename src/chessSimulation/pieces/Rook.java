@@ -23,10 +23,8 @@ public class Rook extends Piece {
 	}
 
 	public String toString() {
-		if(color == Piece.WHITE)
-			return "R";
-		else
-			return "r";
+			return "rook";
+
 	}
 	
 	public Rook clone() {

@@ -5,6 +5,7 @@ package com.company;
 
 import GA.Evolver;
 import GA.GameRules;
+import GUI.ChessGUI;
 import chessSimulation.Board;
 import chessSimulation.Move;
 import chessSimulation.player.*;
@@ -21,6 +22,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 
+		/*
 		Evolver e = new Evolver();
 		GameRules someGame =e.evolve(); //get final evolved child
 
@@ -39,6 +41,16 @@ public class Main {
 		}catch (Exception x){
 			System.out.println("Could not write to file!");
 		}
+*/
+		GameRules test = new GameRules();
+		test.setPawns(8);
+		test.setKings(1);
+		test.setQueens(1);
+		test.setRooks(2);
+		test.setBishops(2);
+		test.setKnights(2);
+		Board testBoard = new Board(test);
+		new ChessGUI(testBoard);
 
 
 }

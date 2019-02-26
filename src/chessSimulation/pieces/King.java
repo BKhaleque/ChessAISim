@@ -34,10 +34,8 @@ public class King extends Piece {
 	}
 	
 	public String toString() {
-		if(color == Piece.WHITE)
-			return "K";
-		else
-			return "k";
+			return "king";
+
 	}
 
 	public ArrayList<Move> getMoves(Board b, int x, int y) {

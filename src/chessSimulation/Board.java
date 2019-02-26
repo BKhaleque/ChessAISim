@@ -8,6 +8,7 @@ import GA.Evolver;
 import GA.GameRules;
 import chessSimulation.pieces.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -54,9 +55,12 @@ public class Board {
 		squares = new Square[8][8];
 
 
+		//create first row of board
 		for(int i = 0; i<8; i++){
 			if(i%2 == 0){
 				squares[i][0] = new Square(false);
+				squares[i][0].setX(i);
+				squares[i][0].setY(0);
 
 			}else {
 				squares[i][0] = new Square(true);
@@ -64,12 +68,17 @@ public class Board {
 			}
 		}
 
+		//create second row og board
+
 		for(int i = 0; i <8; i++){
 			if(i%2 == 0){
 				squares[i][1] = new Square(true);
-
+				squares[i][1].setX(i);
+				squares[i][1].setY(0);
 			}else {
 				squares[i][1] = new Square(false);
+				squares[i][1].setX(i);
+				squares[i][1].setY(0);
 
 			}
 		}
@@ -80,6 +89,7 @@ public class Board {
 			int yVal = r.nextInt(2);
 			oldSquare = squares[xVal][yVal];
 			squares[xVal][yVal] = new Square(new Rook(co), oldSquare.WHITE);
+
 		}
 
 		for(int i = 0; i<gameRules.getKnights(); i++){
@@ -104,6 +114,7 @@ public class Board {
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Bishop(co), oldSquare.WHITE);
+
 		}
 		for(int i = 0; i<gameRules.getQueens(); i++){
 			int xVal = r.nextInt(8);
@@ -154,17 +165,30 @@ public class Board {
 		for(int i = 2; i < 8; i++) {
 			if(i%2==0){
 				for(int j = 0; j < 8; j++) {
-					if(j%2 == 0)
+					if(j%2 == 0) {
 						squares[j][i] = new Square(false);
-					else
+						squares[j][i].setX(j);
+						squares[j][i].setY(i);
+					}
+					else {
 						squares[j][i] = new Square(true);
+						squares[j][i].setX(j);
+						squares[j][i].setY(i);
+					}
 				}
 			}else {
 				for(int j = 0; j < 8; j++) {
-					if(j%2 == 0)
+					if(j%2 == 0) {
 						squares[j][i] = new Square(true);
-					else
+						squares[j][i].setX(j);
+						squares[j][i].setY(i);
+					}
+					else {
 						squares[j][i] = new Square(false);
+						squares[j][i].setX(j);
+						squares[j][i].setY(i);
+					}
+
 				}
 			}
 
@@ -175,19 +199,26 @@ public class Board {
 		for(int i = 0; i<=h; i++){
 			if(i%2 == 0){
 				squares[i][7] = new Square(false);
+				squares[i][7].setX(i);
+				squares[i][7].setY(7);
 
 			}else {
 				squares[i][7] = new Square(true);
-
+				squares[i][7].setX(i);
+				squares[i][7].setY(7);
 			}
 		}
 
 		for(int i = 0; i <8; i++){
 			if(i%2 == 0){
 				squares[i][6] = new Square(true);
+				squares[i][6].setX(i);
+				squares[i][6].setY(6);
 
 			}else {
 				squares[i][6] = new Square(false);
+				squares[i][6].setX(i);
+				squares[i][6].setY(6);
 
 			}
 		}

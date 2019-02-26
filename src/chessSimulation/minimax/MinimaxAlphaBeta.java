@@ -81,13 +81,8 @@ public class MinimaxAlphaBeta {
 			
 			if(beta <= alpha)
 				break;
-				
-				
-			//if (min <= beta)
-			//	return min;
-			
-			//if (min < beta)
-			//	beta = min;
+
+
 		}
 		
 		return beta;
