@@ -21,12 +21,12 @@ public class Rook extends Piece {
 		super(color);
 		value = 5;
 	}
-
 	public String toString() {
-			return "rook";
-
+		if(color == WHITE)
+			return "R";
+		else
+			return "r";
 	}
-	
 	public Rook clone() {
 		return new Rook(color);
 	}

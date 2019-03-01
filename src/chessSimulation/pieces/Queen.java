@@ -23,9 +23,10 @@ public class Queen extends Piece {
 	}
 
 	public String toString() {
-		if(color == Piece.WHITE)
-			return "queen";
-
+		if(color == WHITE)
+			return "Q";
+		else
+			return "q";
 	}
 	
 	public Queen clone() {

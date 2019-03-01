@@ -26,9 +26,10 @@ public class Pawn extends Piece {
 	}
 
 	public String toString() {
-		if(color == Piece.WHITE)
-			return "pawn";
-
+		if(color == WHITE)
+			return "P";
+		else
+			return "p";
 	}
 	
 	/**

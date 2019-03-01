@@ -32,12 +32,13 @@ public class King extends Piece {
 	public King clone() {
 		return new King(color, hasMoved);
 	}
-	
+
 	public String toString() {
-			return "king";
-
+		if(color == WHITE)
+			return "K";
+		else
+			return "k";
 	}
-
 	public ArrayList<Move> getMoves(Board b, int x, int y) {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		

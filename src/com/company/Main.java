@@ -8,6 +8,7 @@ import GA.GameRules;
 import GUI.ChessGUI;
 import chessSimulation.Board;
 import chessSimulation.Move;
+import chessSimulation.Square;
 import chessSimulation.player.*;
 import chessSimulation.pieces.*;
 
@@ -22,7 +23,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-		/*
+/*
 		Evolver e = new Evolver();
 		GameRules someGame =e.evolve(); //get final evolved child
 
@@ -50,6 +51,17 @@ public class Main {
 		test.setBishops(2);
 		test.setKnights(2);
 		Board testBoard = new Board(test);
+		testBoard.canStepOnDifferentColor = true;
+		testBoard.lossOnCheckmate = true;
+		testBoard.kingLostLast = false;
+
+		Square[][] squares = testBoard.getSquares();
+		for(int i = 0; i <8; i++){
+			for (int j = 0; j<8; j++){
+				System.out.println("X: " + squares[i][j].getX());
+				System.out.println("Y: " + squares[i][j].getY());
+			}
+		}
 		new ChessGUI(testBoard);
 
 

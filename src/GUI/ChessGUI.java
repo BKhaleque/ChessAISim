@@ -4,6 +4,8 @@ import chessSimulation.Board;
 import chessSimulation.Move;
 import chessSimulation.Square;
 import chessSimulation.pieces.Piece;
+import chessSimulation.player.AlphaBetaPlayer;
+import chessSimulation.player.Player;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,7 +26,7 @@ import static javax.swing.SwingUtilities.isRightMouseButton;
 public class ChessGUI {
     private final JFrame gameFrame;
     private final BoardPanel boardPanel;
-    private final Board board;
+    public Board board;
     private Square source;
     private Square dest;
     private Piece movedPiece;
@@ -32,6 +34,8 @@ public class ChessGUI {
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(400,350);
     private final static Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
     private  static String chessImgPath = "Art/";
+    private boolean currentColor = true;
+    private AlphaBetaPlayer opponent = new AlphaBetaPlayer(Piece.BLACK,2);
 
     public ChessGUI(Board board) {
         this.gameFrame = new JFrame("JChess");
@@ -41,10 +45,12 @@ public class ChessGUI {
         this.gameFrame.setJMenuBar(tableMenuBar);
         this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
         this.boardPanel = new BoardPanel();
+        this.boardPanel.drawBoard(board);
         this.board = board;
         this.boardPanel.setVisible(true);
         this.gameFrame.add(this.boardPanel);
         this.gameFrame.setVisible(true);
+
 
 
 
@@ -81,16 +87,14 @@ public class ChessGUI {
         final List<TilePanel> tiles = new ArrayList<>();
         BoardPanel(){
             super( new GridLayout(8,8));
-            int row = 0;
-            for(int j = 0; j<8;j++) {
+            for(int i = 7; i>=0;i--) {
                 //row++;
-                for (int i = 0; i <8; i++) {
+                for (int j = 0; j <8; j++) {
                     final TilePanel tp = new TilePanel(this, i);
                     this.tiles.add(tp);
-                    tp.assignColor(row);
+                    tp.assignColor(j);
                     add(tp);
                 }
-                row++;
             }
             setPreferredSize(BOARD_PANEL_DIMENSION);
 
@@ -100,8 +104,9 @@ public class ChessGUI {
         //redraws/draws all components on board
         public void drawBoard(final Board board){
             removeAll();
+            System.out.println(board.toString());
             for(final TilePanel tp: tiles){
-                tp.drawTile(board,tp.row);
+                tp.drawTile(board,tp.row,tp.col);
                 add(tp);
             }
             validate();
@@ -112,7 +117,7 @@ public class ChessGUI {
     }
 
     private class TilePanel extends JPanel{
-        private final int col;
+        private int col;
         private int row;
 
         TilePanel(final BoardPanel bp, final int col)
@@ -120,43 +125,56 @@ public class ChessGUI {
             super(new GridLayout());
             this.col = col;
             setPreferredSize(TILE_PANEL_DIMENSION);
-            assignTilePieceIcon(board);
             addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(final MouseEvent e) {
 
+                    //human player is white, only allow mouse clicks when current colour is white
+                    //if (currentColor = Piece.WHITE) {
 
-                    if(isRightMouseButton(e)){
-                        //on first click
-                        source = null;
-                        dest = null;
-                        movedPiece = null;
 
-                    }else if(isLeftMouseButton(e)){
-                        if(source == null){
-                            source = board.getSquare(row,col);
-                            movedPiece = source.getPiece();
-                            if(movedPiece == null){
+                        if (isRightMouseButton(e)) {
+                            //on first click
+                            source = null;
+                            dest = null;
+                            movedPiece = null;
+                        } else if (isLeftMouseButton(e)) {
+                            if (source == null) {
+                                source = board.getSquare(row, col);
+                                movedPiece = source.getPiece();
+                                if (movedPiece == null) {
+                                    source = null;
+                                }
+                            } else {
+                                //second click
+                                dest = board.getSquare(row, col);
+                                Move move = new Move(source.getX(), source.getY(), dest.getX(), dest.getY());
+                                if (checkIfValidMove(source, move)) {
+                                    board.makeMove(move);
+                                    System.out.println("Valid move!");
+                                } else
+                                    System.out.println("Invalid move");
+
+
                                 source = null;
+                                dest = null;
+                                movedPiece = null;
                             }
-                        }else {
-                            //second click
-                            dest = board.getSquare(row,col);
-                            final Move move = new Move(source.getX(),source.getY(), dest.getX(),dest.getY());
-                            board.makeMove(move);
+
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    bp.drawBoard(board);
+
+
+                                }
+                            });
+
+                            //currentColor = Piece.BLACK;
+
                         }
 
-                        source = null;
-                        dest=null;
-                        movedPiece=null;
-                    }
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            bp.drawBoard(board);
-                        }
-                    });
-
+                  //  }
                 }
 
                 @Override
@@ -192,25 +210,37 @@ public class ChessGUI {
             this.row=row;
         }
 
-        public void drawTile(final Board board, int row){
+        public void drawTile(final Board board, int row,int col){
             assignColor(row);
+            this.col = col;
+            this.row = row;
             assignTilePieceIcon(board);
             validate();
             repaint();
         }
+
+        public boolean checkIfValidMove(Square source, Move move){
+
+            ArrayList<Move> validMoves = source.getPiece().getMoves(board,source.getX(),source.getY());
+            for(Move move1: validMoves){
+                if(move1.equals(move)) {
+                    return true;
+                }
+            }
+        return false;
+        }
         private void assignTilePieceIcon(final Board board){
             this.removeAll();
 
-            for (int x =0; x<8; x++){
-                for(int y =0; y<8;y++){
-                    if (board.getSquare(x,y).isOccupied()){
+                    if (board.getSquare(this.row,this.col).isOccupied()){
                         try{
-                            if(board.getSquare(x,y).WHITE){
-                                final BufferedImage img = ImageIO.read(new File(chessImgPath + "white_"+board.getSquare(x,y).getPiece().toString() + ".png") );
+                            //System.out.println(board.toString());
+                            if(board.getSquare(this.row,this.col).getPiece().getColour() ){
+                                final BufferedImage img = ImageIO.read(new File(chessImgPath + "white_"+board.getSquare(this.row,this.col).getPiece().toString() + ".png") );
                                 add(new JLabel(new ImageIcon(img)));
 
                             }else {
-                                final BufferedImage img = ImageIO.read(new File(chessImgPath + "black_"+board.getSquare(x,y).getPiece().toString() + ".png") );
+                                final BufferedImage img = ImageIO.read(new File(chessImgPath + "black_"+board.getSquare(this.row,this.col).getPiece().toString() + ".png") );
                                 add(new JLabel(new ImageIcon(img)));
 
                             }
@@ -218,8 +248,8 @@ public class ChessGUI {
                             System.out.println("Image not found!");
                         }
                     }
-                }
-            }
+
+
         }
 
         public void highlightMoves(){
@@ -232,6 +262,16 @@ public class ChessGUI {
         }
 
 
+        public int getCol() {
+            return col;
+        }
 
+        public int getRow() {
+            return row;
+        }
+
+        public void setRow(int row) {
+            this.row = row;
+        }
     }
 }

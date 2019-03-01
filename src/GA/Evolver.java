@@ -25,17 +25,18 @@ public class Evolver {
         ArrayList<GameRules> infeasible = new ArrayList<>();
         ArrayList<GameRules> gen0 = new ArrayList<>();
         //declare how many generations to evolve for
-        int generations = 1000;
+        int generations = 100;
         float minFitness = 0.4f;
         int initialPopSize = 10;
 
+        System.out.println("Making initial pop!");
         //declare rulespace of inital games for generation 0 in game objects, traits must be assigned with random values and add to gen0 population
         for (int i = 0; i <initialPopSize; i++) {
             gen0.add(generateGame());
             //determine generated games fitness
             gen0.get(i).fitness = determineFitness(gen0.get(i));
         }
-
+        System.out.println("Determined and inital pop fitness!");
 
 
         GameRules gen0Parent1 = pickParent1(gen0);
@@ -49,13 +50,15 @@ public class Evolver {
         } //If there are no kings then a game is infeasible
 
         for(int i =0; i < gen0.size(); i++){
-            if(gen0.get(i).fitness >= 0.4){
+            if(gen0.get(i).fitness >= 0.5f){
                 feasible.add(gen0.get(i));
             }
-            if(gen0.get(i).fitness <= 0.1){
+            if(gen0.get(i).fitness <= 0.5f){
                 infeasible.add(gen0.get(i));
             }
         }
+
+        System.out.println("Created first infeasible and feasible pop!");
 
 
 
@@ -67,7 +70,9 @@ public class Evolver {
             ///put in s loop to generate new population
             ArrayList<GameRules> newFeasiblePop = new ArrayList<>();
             ArrayList<GameRules> newInfeasiblePop = new ArrayList<>();
-
+            System.out.println("Starting generation: " + i);
+            System.out.println("Current feasible pop size: "+ feasible.size());
+            System.out.println("Current infeasible pop size: "+ infeasible.size());
 
             for(int z = 0; z<initialPopSize; z++) {
                 GameRules feasibleParent1 = pickParent1(feasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
@@ -84,13 +89,13 @@ public class Evolver {
                     infeasible.add(child);
                 } //If there are no kings then a game is infeasible
 
-                if (feasibleChildFitness > 0.4f) {
+                if (feasibleChildFitness > 0.5f) {
                     newFeasiblePop.add(feasibleChild);
                 } else {
                     newInfeasiblePop.add(feasibleChild);
                 }
 
-                if (infeasibleChildFitness > 0.4f) {
+                if (infeasibleChildFitness < 0.5f) {
                     newFeasiblePop.add(infeasibleChild);
                 } else {
                     newInfeasiblePop.add(infeasibleChild);
@@ -117,6 +122,7 @@ public class Evolver {
 
             feasible = newFeasiblePop;
             infeasible = newInfeasiblePop;
+
             //take best individual and carry over, make other 9 through mating
 
 
@@ -172,25 +178,32 @@ public class Evolver {
         //if oe plyer loses a lot of pieces quickly
         //play with a mix of strong and weap bots, strong vs strong must be more ven, weak vs strong must favour strong
         //maybe view move list each turn determine avg number of actions through all turns, higher avg determines higher ftiness
-        int iter = 10;
+        int iter = 4;
         float player1Score = 0;
         int draw = 0;
         int whiteWins = 0;
         int blackWins = 0;
         float fitness = 0;
         for(int i = 0; i < iter; i++) {
+
+            long startTime = System.currentTimeMillis();
             Board board = new Board(gameRules);
             board.kingLostLast = gameRules.kingLostLast;
             board.canStepOnDifferentColor = gameRules.canStepOnDifferentColor;
             board.lossOnCheckmate = gameRules.lossOnCheckmate;
 
-            //System.out.println(board.toString());
-            Player player1 = new AlphaBetaPlayer(Piece.WHITE,2);
+           // System.out.println("Playing!");
+            Player player1 = new AlphaBetaPlayer(Piece.WHITE,1);
             //Player player2 = new RandomPlayer(Piece.BLACK);
             Player player2 = new AlphaBetaPlayer(Piece.BLACK,1);
             //Player player2 = new DeterministicPlayer(Piece.BLACK);
-
-            int winner = play(player1, player2, board);
+            int noOfMoves = 0;
+            int winner = play(player1, player2, board,noOfMoves);
+            if(noOfMoves<100){
+                fitness +=0.1f;
+            }else {
+                fitness -=0.2f;
+            }
 
             if(winner == 1)
                 player1Score++;
@@ -202,6 +215,11 @@ public class Evolver {
                 player1Score--;
                 blackWins ++;
             }
+            long endTime = System.currentTimeMillis() -startTime;
+             if (endTime >20000){
+                 fitness -=0.25;
+             }
+
         }
 
         if (blackWins == whiteWins){
@@ -215,6 +233,8 @@ public class Evolver {
         }
         //remember to keep a track of time
 
+
+        System.out.println("The fitness of this generated game is: " + fitness);
         return fitness;
 
     }
@@ -265,14 +285,14 @@ public class Evolver {
         return game1;
     }
 
-    public static int play(Player player1, Player player2, Board b) {
+    public static int play(Player player1, Player player2, Board b, int noOfMoves) {
         Move move;
         int turn = 0;
         while(true) {
             if(turn++ > 200)
                 return 0;
-            System.out.println("Playing a game!");
-            System.out.println(b);
+          //  System.out.println("Making turn: " + turn);
+            //System.out.println(b);
             move = player1.getNextMove(b);
             if(move == null && b.isCheck(player1.getColour()) && b.lossOnCheckmate) // check and can't move
                 return -1;
@@ -284,7 +304,7 @@ public class Evolver {
                 return 0;
 
             b.makeMove(move);
-            System.out.println(b);
+          //  System.out.println(b);
 
 
             move = player2.getNextMove(b);
@@ -298,7 +318,9 @@ public class Evolver {
                 return 0;
 
             b.makeMove(move);
-            System.out.println(b);
+         //   System.out.println(b);
+            noOfMoves++;
+
 
         }
     }

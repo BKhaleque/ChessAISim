@@ -68,7 +68,7 @@ public class Board {
 			}
 		}
 
-		//create second row og board
+		//create second row of board
 
 		for(int i = 0; i <8; i++){
 			if(i%2 == 0){
@@ -89,6 +89,8 @@ public class Board {
 			int yVal = r.nextInt(2);
 			oldSquare = squares[xVal][yVal];
 			squares[xVal][yVal] = new Square(new Rook(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 
 		}
 
@@ -102,6 +104,8 @@ public class Board {
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Knight(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 		}
 
 		for(int i = 0; i<gameRules.getBishops(); i++){
@@ -114,6 +118,8 @@ public class Board {
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Bishop(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 
 		}
 		for(int i = 0; i<gameRules.getQueens(); i++){
@@ -128,6 +134,8 @@ public class Board {
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Queen(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 		}
 
 		for(int i = 0; i<gameRules.getKings(); i++){
@@ -140,6 +148,8 @@ public class Board {
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new King(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 		}
 		//squares[a][0] = new Square(new Rook(co),false);
 		//squares[b][0] = new Square(new Knight(co),true);
@@ -160,7 +170,11 @@ public class Board {
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Pawn(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 		}
+
+		//set middle of board
 		
 		for(int i = 2; i < 8; i++) {
 			if(i%2==0){
@@ -228,6 +242,8 @@ public class Board {
 			int yVal = Evolver.getRandomNumberInRange(6,7);
 			oldSquare = squares[xVal][yVal];
 			squares[xVal][yVal] = new Square(new Rook(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 		}
 		for(int i = 0; i<gameRules.getKnights(); i++){
 			int xVal = r.nextInt(8);
@@ -239,6 +255,8 @@ public class Board {
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Knight(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 		}
 
 		for(int i = 0; i<gameRules.getBishops(); i++){
@@ -251,6 +269,8 @@ public class Board {
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Bishop(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 		}
 
 		for(int i = 0; i<gameRules.getQueens(); i++){
@@ -263,6 +283,8 @@ public class Board {
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Queen(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 		}
 
 		for(int i = 0; i<gameRules.getKings(); i++){
@@ -275,6 +297,8 @@ public class Board {
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new King(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 		}
 		//squares[a][7] = new Square(new Rook(co),true);
 		//squares[b][7] = new Square(new Knight(co),false);
@@ -294,12 +318,11 @@ public class Board {
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Pawn(co), oldSquare.WHITE);
+			squares[xVal][yVal].setX(xVal);
+			squares[xVal][yVal].setY(yVal);
 		}
 	}
 
-	/**
-	 * @param args
-	 */
 	//public static void main(String[] args) {
 		//Board b = new Board();
 		//System.out.println(b);
@@ -471,6 +494,8 @@ public class Board {
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
 				temp[x][y] = new Square(this.squares[x][y]);
+				temp[x][y].setX(x);
+				temp[x][y].setY(y);
 			}
 		}
 		
@@ -493,6 +518,8 @@ public class Board {
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
 				temp[x][y] = new Square(this.squares[x][y]);
+				temp[x][y].setX(x);
+				temp[x][y].setY(y);
 			}
 		}
 		
@@ -509,6 +536,8 @@ public class Board {
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
 				temp2[x][y] = new Square(b.getSquare(x, y));
+				temp2[x][y].setX(x);
+				temp2[x][y].setY(y);
 			}
 		}
 		
@@ -522,14 +551,19 @@ public class Board {
 	 * 			0 if game continues
 	 */
 	public int makeMove(Move m) {
-		Square oldSquare = squares[m.getX1()][m.getY1()];
+		Square oldSquare1 = squares[m.getX1()][m.getY1()];
+		Square oldSquare2 = squares[m.getX2()][m.getY2()];
 
 
 		squares[m.getX2()][m.getY2()] = squares[m.getX1()][m.getY1()];
-		squares[m.getX1()][m.getY1()] = new Square(oldSquare.WHITE);
+		squares[m.getX2()][m.getY2()].setX(oldSquare2.getX());
+		squares[m.getX2()][m.getY2()].setY(oldSquare2.getY());
+		squares[m.getX1()][m.getY1()] = new Square(oldSquare1.WHITE);
+		squares[m.getX1()][m.getY1()].setX(oldSquare1.getX());
+		squares[m.getX1()][m.getY1()].setY(oldSquare1.getY());
 
 		if(!canStepOnDifferentColor){
-			if(squares[m.getX2()][m.getY2()].WHITE == !oldSquare.getPiece().getColour() ){
+			if(squares[m.getX2()][m.getY2()].WHITE == !oldSquare1.getPiece().getColour() ){
 				return -1;
 			}
 		}
@@ -537,29 +571,47 @@ public class Board {
 		if(m.isCastling()) {
 			if(m.getX2() == g && m.getY2() == 0) {
 				squares[f][0] = squares[h][0];
-				squares[h][0] = new Square(oldSquare.WHITE);
+				squares[h][0] = new Square(oldSquare2.WHITE);
+				squares[h][0].setY(0);
+				squares[h][0].setX(h);
 			}
 			if(m.getX2() == c && m.getY2() == 0) {
 				squares[d][0] = squares[a][0];
-				squares[a][0] = new Square(oldSquare.WHITE);
+				squares[a][0] = new Square(oldSquare2.WHITE);
+				squares[a][0].setY(0);
+				squares[a][0].setX(a);
 			}
 			if(m.getX2() == g && m.getY2() == 7) {
 				squares[f][7] = squares[h][7];
-				squares[h][7] = new Square(oldSquare.WHITE);
+				squares[h][7] = new Square(oldSquare2.WHITE);
+				squares[h][7].setY(0);
+				squares[h][7].setX(h);
 			}
 			if(m.getX2() == c && m.getY2() == 7) {
 				squares[d][7] = squares[a][7];
-				squares[a][7] = new Square(oldSquare.WHITE);
+				squares[a][7] = new Square(oldSquare2.WHITE);
+				squares[a][7].setY(0);
+				squares[a][7].setX(a);
 			}
 		}
 		
 		// pawn at top?
-		if(oldSquare.getPiece().toString().equals("P") && m.getY2() == 7)
-			squares[m.getX2()][m.getY2()] = new Square(new Queen(Piece.WHITE),oldSquare.WHITE);
-		
-		if(oldSquare.getPiece().toString().equals("p") && m.getY2() == 0)
-			squares[m.getX2()][m.getY2()] = new Square(new Queen(Piece.BLACK),oldSquare.WHITE);
-		
+
+			if (oldSquare1.getPiece().toString().equals("P") && m.getY2() == 7) {
+				squares[m.getX2()][m.getY2()] = new Square(new Queen(Piece.WHITE), oldSquare2.WHITE);
+				squares[m.getX2()][m.getY2()].setX(m.getX2());
+				squares[m.getX2()][m.getY2()].setY(m.getY2());
+			}
+			if (oldSquare1.getPiece().toString().equals("p") && m.getY2() == 0) {
+				squares[m.getX2()][m.getY2()] = new Square(new Queen(Piece.BLACK), oldSquare2.WHITE);
+				squares[m.getX2()][m.getY2()].setX(m.getX2());
+				squares[m.getX2()][m.getY2()].setY(m.getY2());
+			}
+
+
+
+
+
 		return 0;
 	}
 	
@@ -599,5 +651,6 @@ public class Board {
 	public void setSquares(Square[][] squares) {
 		this.squares = squares;
 	}
+
 
 }

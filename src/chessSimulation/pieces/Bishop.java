@@ -20,8 +20,10 @@ public class Bishop extends Piece {
 	}
 	
 	public String toString() {
-			return "bishop";
-
+		if(color == WHITE)
+			return "B";
+		else
+			return "b";
 	}
 	
 	public Bishop clone() {

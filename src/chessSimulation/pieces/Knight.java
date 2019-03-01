@@ -27,8 +27,10 @@ public class Knight extends Piece {
 	}
 
 	public String toString() {
-			return "knight";
-
+		if(color == WHITE)
+			return "N";
+		else
+			return "n";
 	}
 	
 	public ArrayList<Move> getMoves(Board b, int x, int y) {
