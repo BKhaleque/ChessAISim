@@ -23,7 +23,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-/*
+
 		Evolver e = new Evolver();
 		GameRules someGame =e.evolve(); //get final evolved child
 
@@ -42,7 +42,7 @@ public class Main {
 		}catch (Exception x){
 			System.out.println("Could not write to file!");
 		}
-*/
+
 		GameRules test = new GameRules();
 		test.setPawns(8);
 		test.setKings(1);

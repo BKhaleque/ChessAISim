@@ -2,6 +2,7 @@ package GA;
 
 import chessSimulation.Board;
 import chessSimulation.Move;
+import chessSimulation.Square;
 import chessSimulation.pieces.Piece;
 import chessSimulation.player.AlphaBetaPlayer;
 import chessSimulation.player.Player;
@@ -60,11 +61,6 @@ public class Evolver {
 
         System.out.println("Created first infeasible and feasible pop!");
 
-
-
-
-
-
         GameRules feasibleChild = new GameRules();
         for(int i = 0; i<generations; i ++){
             ///put in s loop to generate new population
@@ -73,6 +69,14 @@ public class Evolver {
             System.out.println("Starting generation: " + i);
             System.out.println("Current feasible pop size: "+ feasible.size());
             System.out.println("Current infeasible pop size: "+ infeasible.size());
+            if (feasible.size() <2){
+                GameRules gameRules = generateGame();
+                feasible.add(gameRules);
+            }
+            if (infeasible.size() <2){
+                GameRules gameRules = generateGame();
+                infeasible.add(gameRules);
+            }
 
             for(int z = 0; z<initialPopSize; z++) {
                 GameRules feasibleParent1 = pickParent1(feasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
@@ -81,21 +85,21 @@ public class Evolver {
                 GameRules infeasibleParent1 = pickParent1(infeasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
                 GameRules infeasibleParent2 = pickParent2(infeasible, infeasibleParent1);
                 GameRules infeasibleChild = mate(infeasibleParent1, infeasibleParent2);
-                float feasibleChildFitness = determineFitness(feasibleChild);
-                float infeasibleChildFitness = determineFitness(infeasibleChild);
+                feasibleChild.fitness = determineFitness(feasibleChild);
+                infeasibleChild.fitness = determineFitness(infeasibleChild);
 
                 if(child.getKings() ==0){
                     child.feasible = false;
                     infeasible.add(child);
                 } //If there are no kings then a game is infeasible
 
-                if (feasibleChildFitness > 0.5f) {
+                if (feasibleChild.fitness  > 0.5f) {
                     newFeasiblePop.add(feasibleChild);
                 } else {
                     newInfeasiblePop.add(feasibleChild);
                 }
 
-                if (infeasibleChildFitness < 0.5f) {
+                if (infeasibleChild.fitness < 0.5f) {
                     newFeasiblePop.add(infeasibleChild);
                 } else {
                     newInfeasiblePop.add(infeasibleChild);
@@ -122,6 +126,11 @@ public class Evolver {
 
             feasible = newFeasiblePop;
             infeasible = newInfeasiblePop;
+            float avgFeasibleFitness = determineAvgFitness(feasible);
+            float avgInFeasibleFitness = determineAvgFitness(infeasible);
+            System.out.println("The average fitness of the feasible population in generation " + i + " is " + avgFeasibleFitness);
+            System.out.println("The average fitness of the infeasible population in generation " + i + " is " + avgInFeasibleFitness);
+            //if infeasible 2 low, generate random games to add to infeasible population
 
             //take best individual and carry over, make other 9 through mating
 
@@ -156,13 +165,16 @@ public class Evolver {
         GameRules game1 = pop.get(r.nextInt(pop.size()));
         GameRules game2 = pop.get(r.nextInt(pop.size()));
         GameRules game3 = pop.get(r.nextInt(pop.size()));
-        while (game1.equals(parent1) || game2.equals(parent1) || game3.equals(parent1)) {
-            game1 = pop.get(r.nextInt(pop.size()));
-            game2 = pop.get(r.nextInt(pop.size()));
-            game3 = pop.get(r.nextInt(pop.size()));
+        if (pop.size() > 0) {
+            while (game1.equals(parent1) || game2.equals(parent1) || game3.equals(parent1)) {
+                game1 = pop.get(r.nextInt(pop.size()));
+                game2 = pop.get(r.nextInt(pop.size()));
+                game3 = pop.get(r.nextInt(pop.size()));
 
 
+            }
         }
+
         if(game1.fitness>= game2.fitness && game1.fitness>=game3.fitness){
             return game1;
         }else if(game2.fitness>= game1.fitness && game2.fitness>=game3.fitness){
@@ -184,6 +196,7 @@ public class Evolver {
         int whiteWins = 0;
         int blackWins = 0;
         float fitness = 0;
+        int numPieces = 0;
         for(int i = 0; i < iter; i++) {
 
             long startTime = System.currentTimeMillis();
@@ -219,6 +232,8 @@ public class Evolver {
              if (endTime >20000){
                  fitness -=0.25;
              }
+            numPieces = checkNumPieces(board);
+
 
         }
 
@@ -237,6 +252,20 @@ public class Evolver {
         System.out.println("The fitness of this generated game is: " + fitness);
         return fitness;
 
+    }
+
+    public int checkNumPieces(Board board){
+        Square[][] squares = board.getSquares();
+        int numOfPieces = 0;
+        for (int i=0; i<squares.length; i++){
+            for (int j = 0; j<squares[i].length; j++){
+                if (squares[i][j].isOccupied()){
+                    numOfPieces++;
+                }
+
+            }
+        }
+        return numOfPieces;
     }
 
     public  GameRules generateGame(){
@@ -341,7 +370,7 @@ public class Evolver {
         Random randomGenerator = new Random();
 
         //random int to determine
-        int length1= randomGenerator.nextInt(8);
+      //  int length1= randomGenerator.nextInt(8);
 
 
 
@@ -484,6 +513,16 @@ public class Evolver {
 
         }
 
+    }
+
+    public float determineAvgFitness(ArrayList<GameRules> pop){
+        float avgFitness =0;
+
+        for (int  i = 0; i<pop.size(); i++){
+            avgFitness += pop.get(i).fitness;
+        }
+        avgFitness= avgFitness/ pop.size();
+        return avgFitness;
     }
 
 }

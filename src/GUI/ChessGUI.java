@@ -34,8 +34,8 @@ public class ChessGUI {
     private final static Dimension BOARD_PANEL_DIMENSION = new Dimension(400,350);
     private final static Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
     private  static String chessImgPath = "Art/";
-    private boolean currentColor = true;
-    private AlphaBetaPlayer opponent = new AlphaBetaPlayer(Piece.BLACK,2);
+    private boolean currentColor = Piece.WHITE;
+    private AlphaBetaPlayer opponent = new AlphaBetaPlayer(Piece.BLACK,1);
 
     public ChessGUI(Board board) {
         this.gameFrame = new JFrame("JChess");
@@ -51,9 +51,22 @@ public class ChessGUI {
         this.gameFrame.add(this.boardPanel);
         this.gameFrame.setVisible(true);
 
+        /*
+        while(!board.isCheck(currentColor)){
+            if(currentColor == Piece.BLACK){
+                System.out.println("AI Calculating move...");
+                Move move = opponent.getNextMove(board);
+                board.makeMove(move);
+                currentColor = Piece.WHITE;
 
+                this.boardPanel.drawBoard(board);
+                System.out.println(board.toString());
+            }else {
+                continue;
+            }
+        }
 
-
+    */
     }
 
     private JMenuBar popMenuBar(){
@@ -130,7 +143,7 @@ public class ChessGUI {
                 public void mouseClicked(final MouseEvent e) {
 
                     //human player is white, only allow mouse clicks when current colour is white
-                    //if (currentColor = Piece.WHITE) {
+                    if (currentColor == Piece.WHITE) {
 
 
                         if (isRightMouseButton(e)) {
@@ -159,22 +172,55 @@ public class ChessGUI {
                                 source = null;
                                 dest = null;
                                 movedPiece = null;
+
+                                currentColor = Piece.BLACK;
+                                if(board.isCheck(currentColor) && board.getMoves(currentColor) == 0){
+                                    System.out.println("Game over black has lost!");
+                                    System.exit(0);
+
+                                }
+
                             }
 
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {
+                                    bp.removeAll();
+
                                     bp.drawBoard(board);
+                                    bp.setVisible(true);
 
 
                                 }
                             });
 
-                            //currentColor = Piece.BLACK;
 
                         }
 
-                  //  }
+                   }else {
+                        if (isLeftMouseButton(e)) {
+                            board.makeMove(opponent.getNextMove(board));
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    bp.removeAll();
+
+                                    bp.drawBoard(board);
+                                    bp.setVisible(true);
+
+
+                                }
+                            });
+                            currentColor = Piece.WHITE;
+
+                            if(board.isCheck(currentColor) && board.getMoves(currentColor) == 0){
+                                System.out.println("Game over white has lost!");
+                                System.exit(0);
+
+                            }
+                        }
+                    }
                 }
 
                 @Override
