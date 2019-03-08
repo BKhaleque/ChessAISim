@@ -26,7 +26,7 @@ public class Evolver {
         ArrayList<GameRules> infeasible = new ArrayList<>();
         ArrayList<GameRules> gen0 = new ArrayList<>();
         //declare how many generations to evolve for
-        int generations = 100;
+        int generations = 1000;
         float minFitness = 0.4f;
         int initialPopSize = 10;
 
@@ -37,7 +37,7 @@ public class Evolver {
             //determine generated games fitness
             gen0.get(i).fitness = determineFitness(gen0.get(i));
         }
-        System.out.println("Determined and inital pop fitness!");
+        System.out.println("Determined inital pop fitness!");
 
 
         GameRules gen0Parent1 = pickParent1(gen0);
@@ -62,6 +62,7 @@ public class Evolver {
         System.out.println("Created first infeasible and feasible pop!");
 
         GameRules feasibleChild = new GameRules();
+        feasibleChild.fitness = 0; //init feasible child fitness for comparasion at end
         for(int i = 0; i<generations; i ++){
             ///put in s loop to generate new population
             ArrayList<GameRules> newFeasiblePop = new ArrayList<>();
@@ -69,16 +70,16 @@ public class Evolver {
             System.out.println("Starting generation: " + i);
             System.out.println("Current feasible pop size: "+ feasible.size());
             System.out.println("Current infeasible pop size: "+ infeasible.size());
-            if (feasible.size() <2){
+            while (feasible.size() <2){
                 GameRules gameRules = generateGame();
                 feasible.add(gameRules);
             }
-            if (infeasible.size() <2){
+            while ( infeasible.size() <2){
                 GameRules gameRules = generateGame();
                 infeasible.add(gameRules);
             }
 
-            for(int z = 0; z<initialPopSize; z++) {
+            for(int z = 0; z<10; z++) {
                 GameRules feasibleParent1 = pickParent1(feasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
                 GameRules feasibleParent2 = pickParent2(feasible, feasibleParent1);
                 feasibleChild = mate(feasibleParent1, feasibleParent2);
@@ -99,31 +100,23 @@ public class Evolver {
                     newInfeasiblePop.add(feasibleChild);
                 }
 
-                if (infeasibleChild.fitness < 0.5f) {
+                if (infeasibleChild.fitness <= 0.5f) {
                     newFeasiblePop.add(infeasibleChild);
                 } else {
                     newInfeasiblePop.add(infeasibleChild);
                 }
 
                 //elitism checks, take only top value N, each time
-                for (int x = 0; x < feasible.size(); x++) {
-                    if (feasible.get(x).fitness >= 0.4) {
-                        newFeasiblePop.add(feasible.get(x));
-                    }
-                    if (feasible.get(x).fitness >= 0.4) {
-                        newInfeasiblePop.add(feasible.get(x));
-                    }
-                }
-                for (int y = 0; y < infeasible.size(); y++) {
-                    if (infeasible.get(y).fitness >= 0.4) {
-                        newFeasiblePop.add(infeasible.get(y));
-                    }
-                    if (infeasible.get(y).fitness >= 0.4) {
-                        newInfeasiblePop.add(infeasible.get(y));
-                    }
-                }
-            }
 
+
+
+
+
+
+            }
+            newFeasiblePop.add(feasible.get(0)); //elitism carry 0th individual each time
+            newInfeasiblePop.add(infeasible.get(0)); //elitism
+            System.out.println("Making new pops!");
             feasible = newFeasiblePop;
             infeasible = newInfeasiblePop;
             float avgFeasibleFitness = determineAvgFitness(feasible);
@@ -135,6 +128,12 @@ public class Evolver {
             //take best individual and carry over, make other 9 through mating
 
 
+        }
+
+        for(int i=0; i<feasible.size(); i++){
+            if(feasibleChild.fitness < feasible.get(i).fitness){
+                feasibleChild = feasible.get(i);
+            }
         }
 
         return feasibleChild;
@@ -197,10 +196,11 @@ public class Evolver {
         int blackWins = 0;
         float fitness = 0;
         int numPieces = 0;
+
         for(int i = 0; i < iter; i++) {
+            Board board = new Board(gameRules);
 
             long startTime = System.currentTimeMillis();
-            Board board = new Board(gameRules);
             board.kingLostLast = gameRules.kingLostLast;
             board.canStepOnDifferentColor = gameRules.canStepOnDifferentColor;
             board.lossOnCheckmate = gameRules.lossOnCheckmate;
@@ -248,6 +248,9 @@ public class Evolver {
         }
         //remember to keep a track of time
 
+        //check no of killer moves
+        Board board = new Board(gameRules);
+        int killerMoves = board.checkKillerMoves();
 
         System.out.println("The fitness of this generated game is: " + fitness);
         return fitness;

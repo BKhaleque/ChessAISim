@@ -255,7 +255,7 @@ public class MinimaxAlphaBeta {
 			}
 		
 		
-		if(colour == Piece.WHITE)
+		if(this.colour == Piece.WHITE)
 			return whiteScore - blackScore;
 		else
 			return blackScore - whiteScore;

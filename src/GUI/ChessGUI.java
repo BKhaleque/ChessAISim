@@ -174,7 +174,7 @@ public class ChessGUI {
                                 movedPiece = null;
 
                                 currentColor = Piece.BLACK;
-                                if(board.isCheck(currentColor) && board.getMoves(currentColor) == 0){
+                                if(board.isCheck(currentColor) && board.getMoves(currentColor).size() == 0){
                                     System.out.println("Game over black has lost!");
                                     System.exit(0);
 
@@ -214,7 +214,7 @@ public class ChessGUI {
                             });
                             currentColor = Piece.WHITE;
 
-                            if(board.isCheck(currentColor) && board.getMoves(currentColor) == 0){
+                            if(board.isCheck(currentColor) && board.getMoves(currentColor).size() == 0){
                                 System.out.println("Game over white has lost!");
                                 System.exit(0);
 

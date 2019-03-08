@@ -1,0 +1,8 @@
+Pawns: -2
+Knights: 0
+Bishops: 0
+Rooks: -1
+Queens: 0
+KingLostLast: false
+CanStepOnDifferentColor: false
+LossOnCheckmate: true

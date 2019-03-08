@@ -614,6 +614,10 @@ public class Board {
 
 		return 0;
 	}
+
+	public int checkKillerMoves(){
+		return 0;
+	}
 	
 	public Square getSquare(int x, int y) {
 		return squares[x][y];
