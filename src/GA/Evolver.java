@@ -28,7 +28,7 @@ public class Evolver {
         //declare how many generations to evolve for
         int generations = 1000;
         float minFitness = 0.4f;
-        int initialPopSize = 10;
+        int initialPopSize = 100;
 
         System.out.println("Making initial pop!");
         //declare rulespace of inital games for generation 0 in game objects, traits must be assigned with random values and add to gen0 population
