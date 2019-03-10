@@ -189,7 +189,8 @@ public class ChessGUI {
 
                                     bp.drawBoard(board);
                                     bp.setVisible(true);
-
+                                    bp.revalidate();
+                                    bp.repaint();
 
                                 }
                             });
@@ -208,7 +209,8 @@ public class ChessGUI {
 
                                     bp.drawBoard(board);
                                     bp.setVisible(true);
-
+                                    bp.revalidate();
+                                    bp.repaint();
 
                                 }
                             });
