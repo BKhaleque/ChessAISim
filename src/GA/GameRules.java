@@ -21,6 +21,8 @@ public class GameRules {
 
     float probability;
 
+    public int startingRows;
+
     public GameRules(int pawns, int queens, int knights, int rooks, int bishops, boolean canStepOnDifferntColor, boolean lossOnCheckmate, boolean kingLostLast, boolean paralysedOnAttack, boolean feasible) {
         this.pawns = pawns;
         this.queens = queens;
@@ -32,6 +34,7 @@ public class GameRules {
         this.kingLostLast = kingLostLast;
         //this.paralysedOnAttack = paralysedOnAttack;
         this.feasible = feasible;
+        this.totalPieces = 0;
 
     }
 
@@ -182,5 +185,13 @@ public class GameRules {
 
     public void setFitness(float fitness) {
         this.fitness = fitness;
+    }
+
+    public int getStartingRows() {
+        return startingRows;
+    }
+
+    public void setStartingRows(int startingRows) {
+        this.startingRows = startingRows;
     }
 }

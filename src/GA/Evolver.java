@@ -10,9 +10,15 @@ import chessSimulation.player.RandomPlayer;
 import GA.GameRules;
 import javafx.scene.Parent;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Evolver {
 
@@ -26,10 +32,11 @@ public class Evolver {
         ArrayList<GameRules> infeasible = new ArrayList<>();
         ArrayList<GameRules> gen0 = new ArrayList<>();
         //declare how many generations to evolve for
-        int generations = 1000;
-        float minFitness = 0.4f;
-        int initialPopSize = 100;
-
+        int generations = 100;
+        float minFitness = 0.5f;
+        int initialPopSize = 10;
+        float[] avgInfFitness = new float[generations];
+        float[] avgFeasFitness = new float[generations];
         System.out.println("Making initial pop!");
         //declare rulespace of inital games for generation 0 in game objects, traits must be assigned with random values and add to gen0 population
         for (int i = 0; i <initialPopSize; i++) {
@@ -51,10 +58,10 @@ public class Evolver {
         } //If there are no kings then a game is infeasible
 
         for(int i =0; i < gen0.size(); i++){
-            if(gen0.get(i).fitness >= 0.5f){
+            if(gen0.get(i).fitness >= minFitness){
                 feasible.add(gen0.get(i));
             }
-            if(gen0.get(i).fitness <= 0.5f){
+            if(gen0.get(i).fitness <= minFitness){
                 infeasible.add(gen0.get(i));
             }
         }
@@ -79,7 +86,7 @@ public class Evolver {
                 infeasible.add(gameRules);
             }
 
-            for(int z = 0; z<10; z++) {
+            for(int z = 0; z<initialPopSize; z++) {
                 GameRules feasibleParent1 = pickParent1(feasible); //remember to add elitism (copying small portion of fittest individuals into next generation) and tournament for parent selection by getting 2 or 3 objects and comparing fitness
                 GameRules feasibleParent2 = pickParent2(feasible, feasibleParent1);
                 feasibleChild = mate(feasibleParent1, feasibleParent2);
@@ -94,13 +101,13 @@ public class Evolver {
                     infeasible.add(child);
                 } //If there are no kings then a game is infeasible
 
-                if (feasibleChild.fitness  > 0.5f) {
+                if (feasibleChild.fitness  > 0.4f) {
                     newFeasiblePop.add(feasibleChild);
                 } else {
                     newInfeasiblePop.add(feasibleChild);
                 }
 
-                if (infeasibleChild.fitness <= 0.5f) {
+                if (infeasibleChild.fitness <= 0.4f) {
                     newFeasiblePop.add(infeasibleChild);
                 } else {
                     newInfeasiblePop.add(infeasibleChild);
@@ -121,11 +128,15 @@ public class Evolver {
             infeasible = newInfeasiblePop;
             float avgFeasibleFitness = determineAvgFitness(feasible);
             float avgInFeasibleFitness = determineAvgFitness(infeasible);
+            avgFeasFitness[i] = avgFeasibleFitness;
+            avgInfFitness[i] = avgInFeasibleFitness;
+
             System.out.println("The average fitness of the feasible population in generation " + i + " is " + avgFeasibleFitness);
             System.out.println("The average fitness of the infeasible population in generation " + i + " is " + avgInFeasibleFitness);
             //if infeasible 2 low, generate random games to add to infeasible population
 
-            //take best individual and carry over, make other 9 through mating
+
+
 
 
         }
@@ -134,6 +145,19 @@ public class Evolver {
             if(feasibleChild.fitness < feasible.get(i).fitness){
                 feasibleChild = feasible.get(i);
             }
+        }
+
+        try{
+            PrintWriter writer = new PrintWriter("feasible.txt", "UTF-8");
+            PrintWriter writer2 = new PrintWriter("infeasible.txt", "UTF-8");
+            for (int i = 0; i< generations; i++){
+                writer.println( i+ ", " + avgFeasFitness[i]);
+                writer2.println(i+ ", " + avgInfFitness[i]);
+            }
+
+
+        }catch (Exception x){
+            System.out.println("Could not write to file!");
         }
 
         return feasibleChild;
@@ -186,7 +210,7 @@ public class Evolver {
 
     public float determineFitness(GameRules gameRules){
         //add piece count  stable piece count higher fitness
-        //if oe plyer loses a lot of pieces quickly
+        //if the player loses a lot of pieces quickly
         //play with a mix of strong and weap bots, strong vs strong must be more ven, weak vs strong must favour strong
         //maybe view move list each turn determine avg number of actions through all turns, higher avg determines higher ftiness
         int iter = 4;
@@ -196,27 +220,43 @@ public class Evolver {
         int blackWins = 0;
         float fitness = 0;
         int numPieces = 0;
+        gameRules.totalPieces =0;
+        gameRules.totalPieces += gameRules.getBishops();
+        gameRules.totalPieces += gameRules.getPawns();
+        gameRules.totalPieces += gameRules.getKnights();
+        gameRules.totalPieces += gameRules.getQueens();
+        gameRules.totalPieces += gameRules.getKings();
+        gameRules.totalPieces += gameRules.getRooks();
+
+
+        if (gameRules.totalPieces> ((gameRules.startingRows * 8) -1) ){
+            return -1;
+        }
 
         for(int i = 0; i < iter; i++) {
-            Board board = new Board(gameRules);
+           // System.out.println("creating board...");
+
+            Board board = new Board(gameRules,gameRules.startingRows);
 
             long startTime = System.currentTimeMillis();
+            long maxTime = startTime + 15*1000;
             board.kingLostLast = gameRules.kingLostLast;
             board.canStepOnDifferentColor = gameRules.canStepOnDifferentColor;
             board.lossOnCheckmate = gameRules.lossOnCheckmate;
 
-           // System.out.println("Playing!");
+            System.out.println("Playing!");
             Player player1 = new AlphaBetaPlayer(Piece.WHITE,1);
             //Player player2 = new RandomPlayer(Piece.BLACK);
             Player player2 = new AlphaBetaPlayer(Piece.BLACK,1);
             //Player player2 = new DeterministicPlayer(Piece.BLACK);
-            int noOfMoves = 0;
-            int winner = play(player1, player2, board,noOfMoves);
-            if(noOfMoves<100){
-                fitness +=0.1f;
-            }else {
-                fitness -=0.2f;
-            }
+           // int noOfMoves = 0;
+            int winner = play(player1, player2, board, gameRules);
+           // System.out.println(board);
+            //if(noOfMoves<100 && noOfMoves >0){
+            //    fitness +=0.1f;
+           // }else {
+           //     fitness -=0.2f;
+           // }
 
             if(winner == 1)
                 player1Score++;
@@ -227,11 +267,11 @@ public class Evolver {
             }else {
                 player1Score--;
                 blackWins ++;
-            }
-            long endTime = System.currentTimeMillis() -startTime;
-             if (endTime >20000){
-                 fitness -=0.25;
-             }
+                 long endTime = System.currentTimeMillis() -startTime;
+                 if (endTime <10000){
+                     fitness +=0.05;
+                 }     }
+
             numPieces = checkNumPieces(board);
 
 
@@ -249,7 +289,7 @@ public class Evolver {
         //remember to keep a track of time
 
         //check no of killer moves
-        Board board = new Board(gameRules);
+        Board board = new Board(gameRules, gameRules.startingRows);
         int killerMoves = board.checkKillerMoves();
 
         System.out.println("The fitness of this generated game is: " + fitness);
@@ -274,10 +314,11 @@ public class Evolver {
     public  GameRules generateGame(){
         GameRules game1= new GameRules();
         ArrayList<Integer> noOfPieces = new ArrayList<>();
+        int startingRows = getRandomNumberInRange(0,3);
         int pieces = 0;
         int totalSpaces = 15;
 
-        for(int i =0; i<6; i++){
+        for(int i =0; i<5; i++){
             if(totalSpaces<=0){
                 noOfPieces.add(0);
                 continue;
@@ -288,12 +329,12 @@ public class Evolver {
 
         }
 
-        game1.setKings(noOfPieces.get(0));
-        game1.setPawns(noOfPieces.get(1));
-        game1.setQueens(noOfPieces.get(2));
-        game1.setKnights(noOfPieces.get(3));
-        game1.setRooks(noOfPieces.get(4));
-        game1.setBishops(noOfPieces.get(5));
+        game1.setKings(1);
+        game1.setPawns(noOfPieces.get(0));
+        game1.setQueens(noOfPieces.get(1));
+        game1.setKnights(noOfPieces.get(2));
+        game1.setRooks(noOfPieces.get(3));
+        game1.setBishops(noOfPieces.get(4));
         if (getRandomNumberInRange(0,1) == 1)
             game1.setCanStepOnDifferentColor(true);
         else
@@ -314,15 +355,20 @@ public class Evolver {
        // else
         //    game1.setParalysedOnAttack(false);
 
+        game1.setStartingRows(startingRows);
         return game1;
+
     }
 
-    public static int play(Player player1, Player player2, Board b, int noOfMoves) {
+    public static int play(Player player1, Player player2, Board b, GameRules gameRules) {
         Move move;
         int turn = 0;
         while(true) {
-            if(turn++ > 200)
+            if(turn++ > 200){
                 return 0;
+
+            }
+
           //  System.out.println("Making turn: " + turn);
             //System.out.println(b);
             move = player1.getNextMove(b);
@@ -340,18 +386,31 @@ public class Evolver {
 
 
             move = player2.getNextMove(b);
-            if(move == null && b.isCheck(player2.getColour()) && b.lossOnCheckmate && !b.kingLostLast) // check and can't move
+            if(move == null && b.isCheck(player2.getColour()) && b.lossOnCheckmate && !b.kingLostLast){
+                if(turn<120 && turn >0){
+                    gameRules.fitness +=0.1f;
+                }else {
+                    gameRules.fitness -=0.2f;
+                }
                 return 1;
+                // check and can't move
+            }
 
-            if(move == null && b.isCheck(player2.getColour()) && !b.lossOnCheckmate && !b.kingLostLast)
+            if(move == null && b.isCheck(player2.getColour()) && !b.lossOnCheckmate && !b.kingLostLast) {
+                if(turn<120 && turn >0){
+                    gameRules.fitness +=0.1f;
+                }else {
+                    gameRules.fitness -=0.2f;
+                }
                 return -1;
-
-            if(move == null) // no check but can't move
+            }
+            if(move == null) { // no check but can't move
+                gameRules.fitness -=0.2f;
                 return 0;
-
+            }
             b.makeMove(move);
          //   System.out.println(b);
-            noOfMoves++;
+           // noOfMoves++;
 
 
         }
@@ -379,7 +438,7 @@ public class Evolver {
 
         //set traits of random length from parent1 and 2
 
-        for(int i = 0; i<10; i++){
+        for(int i = 0; i<11; i++){
             if (randomGenerator.nextInt(1) == 1){
                 setTraits(parent1,i,child);
             }else {
@@ -390,7 +449,7 @@ public class Evolver {
         //Mutate after crossover with prob 1/N
 
         for(int i =0; i <10; i++){
-            if(randomGenerator.nextInt(9) == 1){
+            if(randomGenerator.nextInt(4) == 1){
                 mutate(i,child);
             }
         }
@@ -433,12 +492,12 @@ public class Evolver {
                 child.setKingLostLast(parent.getKingLostLast());
                 break;
 
-          //  case 8:
-             //   child.setParalysedOnAttack(parent.getParalysedOnAttack());
-            //    break;
-          //  case 9:
-           //     child.setKings(parent.getKings());
-           //     break;
+            case 8:
+                child.setStartingRows(parent.getStartingRows());
+                break;
+            case 9:
+                child.setKings(parent.getKings());
+                break;
         }
     }
     public void mutate(int trait, GameRules child){
@@ -446,44 +505,45 @@ public class Evolver {
         Random random = new Random();
         switch (trait) {
             case 0:
-                if(random.nextInt(1) == 1) {
+                if(random.nextInt(2) == 1&& child.totalPieces < (child.startingRows*8)-1  ) {
                     child.setPawns(child.getPawns() + 1);
+
                     break;
-                }else {
+                }else if(child.getPawns()>0){
                     child.setPawns(child.getPawns() - 1);
                     break;
                 }
             case 1:
-                if(random.nextInt(1)== 1) {
-                    child.setPawns(child.getQueens() + 1);
+                if(random.nextInt(2)== 1&& child.totalPieces < (child.startingRows*8)-1) {
+                    child.setQueens(child.getQueens() + 1);
                     break;
-                }else {
-                    child.setPawns(child.getQueens() - 1);
+                }else if(child.getQueens()>0){
+                    child.setQueens(child.getQueens() - 1);
                     break;
                 }
             case 2:
-                if(random.nextInt(1) == 1) {
-                    child.setPawns(child.getKnights() + 1);
+                if(random.nextInt(2) == 1 && child.totalPieces < (child.startingRows*8)-1) {
+                    child.setKnights(child.getKnights() + 1);
                     break;
-                }else {
-                    child.setPawns(child.getKnights() - 1);
+                }else if(child.getKnights()>0) {
+                    child.setKnights(child.getKnights() - 1);
                     break;
                 }
 
             case 3:
-                if(random.nextInt(1) == 1) {
+                if(random.nextInt(1) == 1 && child.totalPieces < (child.startingRows*8)-1) {
                     child.setRooks(child.getRooks() + 1);
                     break;
-                }else {
+                }else if(child.getRooks()>0){
                     child.setRooks(child.getRooks() -1);
                     break;
                 }
             case 4:
-                if(random.nextInt(1) == 1) {
-                    child.setRooks(child.getBishops() + 1);
+                if(random.nextInt(1) == 1 && child.totalPieces < (child.startingRows*8)-1) {
+                    child.setBishops(child.getBishops() + 1);
                     break;
-                }else {
-                    child.setRooks(child.getBishops() -1);
+                }else if(child.getBishops()>0) {
+                    child.setBishops(child.getBishops() -1);
                     break;
                 }
             case 5:
@@ -506,13 +566,14 @@ public class Evolver {
                     child.kingLostLast = true;
                 }                break;
 
-           // case 8:
-           ////     if(child.paralysedOnAttack){
-              //      child.paralysedOnAttack = false;
-              //  }else{
-              //      child.paralysedOnAttack = true;
-              //  }
-              //  break;
+            case 9:
+                if(child.startingRows <3){
+                    child.startingRows++;
+                }else {
+                    child.startingRows--;
+                }
+
+
 
         }
 

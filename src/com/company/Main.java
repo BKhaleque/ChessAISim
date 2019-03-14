@@ -50,7 +50,7 @@ public class Main {
 		test.setRooks(2);
 		test.setBishops(2);
 		test.setKnights(2);
-		Board testBoard = new Board(someGame);
+		Board testBoard = new Board(someGame,someGame.startingRows);
 		testBoard.canStepOnDifferentColor = true;
 		testBoard.lossOnCheckmate = true;
 		testBoard.kingLostLast = false;
