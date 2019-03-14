@@ -150,10 +150,14 @@ public class Evolver {
         try{
             PrintWriter writer = new PrintWriter("feasible.txt", "UTF-8");
             PrintWriter writer2 = new PrintWriter("infeasible.txt", "UTF-8");
+            writer.println("Test line");
             for (int i = 0; i< generations; i++){
                 writer.println( i+ ", " + avgFeasFitness[i]);
                 writer2.println(i+ ", " + avgInfFitness[i]);
             }
+
+            writer.close();//Write child rules to file
+            writer2.close();//Write child rules to file
 
 
         }catch (Exception x){

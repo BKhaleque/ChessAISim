@@ -35,7 +35,7 @@ public class ChessGUI {
     private final static Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
     private  static String chessImgPath = "Art/";
     private boolean currentColor = Piece.WHITE;
-    private AlphaBetaPlayer opponent = new AlphaBetaPlayer(Piece.BLACK,1);
+    private AlphaBetaPlayer opponent = new AlphaBetaPlayer(Piece.BLACK,0);
 
     public ChessGUI(Board board) {
         this.gameFrame = new JFrame("JChess");
