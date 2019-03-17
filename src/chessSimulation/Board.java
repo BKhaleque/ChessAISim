@@ -641,7 +641,20 @@ public class Board {
 	}
 
 	public int checkKillerMoves(){
-		return 0;
+		int killerMoves = 0;
+		ArrayList<Move> wmoves = getMoves(true);
+		ArrayList<Move> bmoves = getMoves(false);
+			if(getMovesAfter(true, wmoves).size() <=0){
+				killerMoves++;
+			}
+
+			if(getMovesAfter(true, bmoves).size() <=0){
+				killerMoves++;
+			}
+
+
+
+		return killerMoves;
 	}
 	
 	public Square getSquare(int x, int y) {
