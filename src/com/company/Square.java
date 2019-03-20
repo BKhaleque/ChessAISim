@@ -1,9 +1,7 @@
 /**
  * 
  */
-package chessSimulation;
-
-import chessSimulation.pieces.Piece;
+package com.company;
 
 /**
  * @author Gunnar Atli

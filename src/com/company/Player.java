@@ -1,7 +1,4 @@
-package chessSimulation.player;
-
-import chessSimulation.Move;
-import chessSimulation.Board;
+package com.company;
 
 /**
  * Player <br>

@@ -1,16 +1,11 @@
 /**
  * 
  */
-package chessSimulation;
+package com.company;
 
-//import GA.GameRules;
-import GA.Evolver;
-import GA.GameRules;
-import chessSimulation.pieces.*;
+//import com.company.GameRules;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**

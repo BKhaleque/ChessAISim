@@ -1,4 +1,4 @@
-package GA;
+package com.company;
 
 
 public class GameRules {

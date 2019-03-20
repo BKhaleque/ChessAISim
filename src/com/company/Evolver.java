@@ -1,25 +1,8 @@
-package GA;
+package com.company;
 
-import chessSimulation.Board;
-import chessSimulation.Move;
-import chessSimulation.Square;
-import chessSimulation.minimax.MinimaxAlphaBeta;
-import chessSimulation.pieces.Piece;
-import chessSimulation.player.AlphaBetaPlayer;
-import chessSimulation.player.Player;
-import chessSimulation.player.RandomPlayer;
-import GA.GameRules;
-import javafx.scene.Parent;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Evolver {
 

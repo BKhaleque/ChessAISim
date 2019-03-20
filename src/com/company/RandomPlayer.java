@@ -1,14 +1,10 @@
 /**
  * 
  */
-package chessSimulation.player;
+package com.company;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-
-import chessSimulation.Move;
-import chessSimulation.Board;
 
 /**
  * @author Gunnar Atli

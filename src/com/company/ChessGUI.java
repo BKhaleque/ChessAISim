@@ -1,11 +1,4 @@
-package GUI;
-
-import chessSimulation.Board;
-import chessSimulation.Move;
-import chessSimulation.Square;
-import chessSimulation.pieces.Piece;
-import chessSimulation.player.AlphaBetaPlayer;
-import chessSimulation.player.Player;
+package com.company;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

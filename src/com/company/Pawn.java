@@ -1,10 +1,8 @@
 /**
  * 
  */
-package chessSimulation.pieces;
+package com.company;
 
-import chessSimulation.Board;
-import chessSimulation.Move;
 import java.util.ArrayList;
 
 /**

@@ -1,12 +1,9 @@
 /**
  * 
  */
-package chessSimulation.pieces;
+package com.company;
 
 import java.util.ArrayList;
-
-import chessSimulation.Board;
-import chessSimulation.Move;
 
 /**
  * @author Gunnar Atli

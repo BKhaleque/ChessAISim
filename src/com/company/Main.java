@@ -3,15 +3,6 @@
  */
 package com.company;
 
-import GA.Evolver;
-import GA.GameRules;
-import GUI.ChessGUI;
-import chessSimulation.Board;
-import chessSimulation.Move;
-import chessSimulation.Square;
-import chessSimulation.player.*;
-import chessSimulation.pieces.*;
-
 import java.io.PrintWriter;
 
 

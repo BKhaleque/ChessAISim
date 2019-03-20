@@ -1,7 +1,7 @@
 /**
  * 
  */
-package chessSimulation;
+package com.company;
 
 /**
  * @author Gunnar Atli

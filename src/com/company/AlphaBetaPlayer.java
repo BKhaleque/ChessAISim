@@ -1,12 +1,8 @@
 /**
  * 
  */
-package chessSimulation.player;
+package com.company;
 
-
-import chessSimulation.Move;
-import chessSimulation.Board;
-import chessSimulation.minimax.*;
 
 /**
  * @author Gunnar Atli
