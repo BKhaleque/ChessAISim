@@ -1,9 +1,8 @@
 /**
  * 
  */
-package com.company;
 
-//import com.company.GameRules;
+//import GameRules;
 
 import java.util.ArrayList;
 import java.util.Random;

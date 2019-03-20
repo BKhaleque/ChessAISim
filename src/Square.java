@@ -1,7 +1,6 @@
 /**
  * 
  */
-package com.company;
 
 /**
  * @author Gunnar Atli

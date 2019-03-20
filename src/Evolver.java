@@ -1,5 +1,3 @@
-package com.company;
-
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;

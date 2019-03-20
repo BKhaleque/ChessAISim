@@ -1,5 +1,3 @@
-package com.company;
-
 /**
  * Player <br>
  * A generic player of the konane game
