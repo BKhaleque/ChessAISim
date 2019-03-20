@@ -3,6 +3,7 @@ package GA;
 import chessSimulation.Board;
 import chessSimulation.Move;
 import chessSimulation.Square;
+import chessSimulation.minimax.MinimaxAlphaBeta;
 import chessSimulation.pieces.Piece;
 import chessSimulation.player.AlphaBetaPlayer;
 import chessSimulation.player.Player;
@@ -32,8 +33,8 @@ public class Evolver {
         ArrayList<GameRules> infeasible = new ArrayList<>();
         ArrayList<GameRules> gen0 = new ArrayList<>();
         //declare how many generations to evolve for
-        int generations = 100;
-        float minFitness = 0.5f;
+        int generations = 1000;
+        float minFitness = 0.4f;
         int initialPopSize = 10;
         float[] avgInfFitness = new float[generations];
         float[] avgFeasFitness = new float[generations];
@@ -277,6 +278,12 @@ public class Evolver {
                  }     }
 
             numPieces = checkNumPieces(board);
+                       if(MinimaxAlphaBeta.killerMoves> 3){
+                           fitness -=0.1;
+                       }else
+                           fitness+=0.1;
+            MinimaxAlphaBeta.killerMoves =0;
+
 
 
         }
@@ -293,8 +300,7 @@ public class Evolver {
         //remember to keep a track of time
 
         //check no of killer moves
-        Board board = new Board(gameRules, gameRules.startingRows);
-        int killerMoves = board.checkKillerMoves();
+
 
         System.out.println("The fitness of this generated game is: " + fitness);
         return fitness;

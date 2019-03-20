@@ -16,6 +16,7 @@ import chessSimulation.Move;
 import chessSimulation.Square;
 import chessSimulation.pieces.Piece;
 
+
 /**
  * @author Gunnar Atli
  *
@@ -25,6 +26,7 @@ public class MinimaxAlphaBeta {
 	boolean colour;
 	int maxDepth;
 	Random rand;
+	public static int killerMoves;
 	/**
 	 * 
 	 */
@@ -39,9 +41,10 @@ public class MinimaxAlphaBeta {
 			return eval1(b, state, colour);
 		
 		ArrayList<Move> moves = b.getMovesAfter(colour, state);
-		if(moves.size() == 0)
+		if(moves.size() == 0) {
+			killerMoves++;
 			return Float.NEGATIVE_INFINITY;
-		
+		}
 		for(int i = 0; i < moves.size(); i++) {
 			state.add(moves.get(i));
 			float tmp = minValue(b, state, alpha, beta, depth + 1);
@@ -68,9 +71,10 @@ public class MinimaxAlphaBeta {
 			return eval1(b, state, !colour);
 		
 		ArrayList<Move> moves = b.getMovesAfter(!colour, state);
-		if(moves.size() == 0)
+		if(moves.size() == 0) {
+			killerMoves++;
 			return Float.POSITIVE_INFINITY;
-		
+		}
 		for(int i = 0; i < moves.size(); i++) {
 			state.add(moves.get(i));
 			float tmp = maxValue(b, state, alpha, beta, depth + 1);
@@ -142,7 +146,9 @@ public class MinimaxAlphaBeta {
  				maxi = i;
  			}
  		}
- 		
+ 		if(maxi == -1){
+ 			maxi =0;
+		}
  		return moves.get(maxi);
 	}
 	/*
@@ -236,8 +242,10 @@ public class MinimaxAlphaBeta {
 		Square[][] squares = b.getSquaresAfter(moves);
 		
 		if(b.getMoves(currentColor).size() == 0) {
-			if(b.isCheckAfter(currentColor, moves) && b.lossOnCheckmate)
+			if(b.isCheckAfter(currentColor, moves) && b.lossOnCheckmate) {
+				killerMoves++;
 				return (currentColor == this.colour) ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
+			}
 			else
 				return Float.NEGATIVE_INFINITY; // we don't like draws
 		}

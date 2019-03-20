@@ -10,6 +10,7 @@ import chessSimulation.pieces.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -640,22 +641,7 @@ public class Board {
 		return 0;
 	}
 
-	public int checkKillerMoves(){
-		int killerMoves = 0;
-		ArrayList<Move> wmoves = getMoves(true);
-		ArrayList<Move> bmoves = getMoves(false);
-			if(getMovesAfter(true, wmoves).size() <=0){
-				killerMoves++;
-			}
 
-			if(getMovesAfter(true, bmoves).size() <=0){
-				killerMoves++;
-			}
-
-
-
-		return killerMoves;
-	}
 	
 	public Square getSquare(int x, int y) {
 		return squares[x][y];
