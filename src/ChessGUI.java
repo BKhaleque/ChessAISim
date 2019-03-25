@@ -27,8 +27,14 @@ public class ChessGUI {
     private  static String chessImgPath = "Art/";
     private boolean currentColor = Piece.WHITE;
     private AlphaBetaPlayer opponent = new AlphaBetaPlayer(Piece.BLACK,0);
+    private   int rows;
+    private   int cols;
 
-    public ChessGUI(Board board) {
+
+
+    public ChessGUI(Board board, int rows, int cols) {
+        this.rows = rows;
+        this.cols = cols;
         this.gameFrame = new JFrame("JChess");
         final JMenuBar tableMenuBar = popMenuBar();
         this.gameFrame.setLayout(new BorderLayout());
@@ -41,6 +47,7 @@ public class ChessGUI {
         this.boardPanel.setVisible(true);
         this.gameFrame.add(this.boardPanel);
         this.gameFrame.setVisible(true);
+
 
         /*
         while(!board.isCheck(currentColor)){
@@ -90,7 +97,7 @@ public class ChessGUI {
     private class BoardPanel extends JPanel{
         final List<TilePanel> tiles = new ArrayList<>();
         BoardPanel(){
-            super( new GridLayout(8,8));
+            super( new GridLayout(rows,cols));
             for(int i = 7; i>=0;i--) {
                 //row++;
                 for (int j = 0; j <8; j++) {

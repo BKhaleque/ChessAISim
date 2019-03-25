@@ -13,7 +13,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-
+/*
 		Evolver e = new Evolver();
 		GameRules someGame =e.evolve(); //get final evolved child
 
@@ -32,7 +32,7 @@ public class Main {
 		}catch (Exception x){
 			System.out.println("Could not write to file!");
 		}
-
+*/
 		GameRules test = new GameRules();
 		test.setPawns(8);
 		test.setKings(1);
@@ -40,19 +40,20 @@ public class Main {
 		test.setRooks(2);
 		test.setBishops(2);
 		test.setKnights(2);
-		Board testBoard = new Board(someGame,someGame.startingRows);
+		test.startingRows = 1;
+		Board testBoard = new Board(test,test.startingRows);
 		testBoard.canStepOnDifferentColor = true;
 		testBoard.lossOnCheckmate = true;
 		testBoard.kingLostLast = false;
 
 		Square[][] squares = testBoard.getSquares();
-		for(int i = 0; i <8; i++){
-			for (int j = 0; j<8; j++){
-				System.out.println("X: " + squares[i][j].getX());
-				System.out.println("Y: " + squares[i][j].getY());
-			}
-		}
-		new ChessGUI(testBoard);
+		//for(int i = 0; i <8; i++){
+		//	for (int j = 0; j<8; j++){
+		//		System.out.println("X: " + squares[i][j].getX());
+		//		System.out.println("Y: " + squares[i][j].getY());
+		//	}
+		//}
+		new ChessGUI(testBoard,8,8);
 
 
 }

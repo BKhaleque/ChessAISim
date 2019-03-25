@@ -247,7 +247,7 @@ public class Board {
 
 		for(int i = 0; i<gameRules.getRooks(); i++){
 			int xVal = r.nextInt(8);
-			int yVal = Evolver.getRandomNumberInRange(startingRowsAvailable,7);
+			int yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
 			oldSquare = squares[xVal][yVal];
 			squares[xVal][yVal] = new Square(new Rook(co), oldSquare.WHITE);
 			squares[xVal][yVal].setX(xVal);
@@ -257,11 +257,11 @@ public class Board {
 
 		for(int i = 0; i<gameRules.getKnights(); i++){
 			int xVal = r.nextInt(8);
-			int yVal = Evolver.getRandomNumberInRange(startingRowsAvailable,7);
+			int yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
 			oldSquare = squares[xVal][yVal];
 			while (oldSquare.isOccupied()){
 				xVal = r.nextInt(8);
-				yVal = Evolver.getRandomNumberInRange(startingRowsAvailable,7);
+				yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Knight(co), oldSquare.WHITE);
@@ -272,11 +272,11 @@ public class Board {
 
 		for(int i = 0; i<gameRules.getBishops(); i++){
 			int xVal = r.nextInt(8);
-			int yVal = Evolver.getRandomNumberInRange(startingRowsAvailable,7);
+			int yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
 			oldSquare = squares[xVal][yVal];
 			while (oldSquare.isOccupied()){
 				xVal = r.nextInt(8);
-				yVal = Evolver.getRandomNumberInRange(startingRowsAvailable,7);
+				yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Bishop(co), oldSquare.WHITE);
@@ -288,11 +288,11 @@ public class Board {
 
 		for(int i = 0; i<gameRules.getQueens(); i++){
 			int xVal = r.nextInt(8);
-			int yVal = Evolver.getRandomNumberInRange(startingRowsAvailable,7);
+			int yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
 			oldSquare = squares[xVal][yVal];
 			while (oldSquare.isOccupied()){
 				xVal = r.nextInt(8);
-				yVal = Evolver.getRandomNumberInRange(startingRowsAvailable,7);
+				yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Queen(co), oldSquare.WHITE);
@@ -304,11 +304,11 @@ public class Board {
 
 		for(int i = 0; i<gameRules.getKings(); i++){
 			int xVal = r.nextInt(8);
-			int yVal = Evolver.getRandomNumberInRange(startingRowsAvailable,7);
+			int yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
 			oldSquare = squares[xVal][yVal];
 			while (oldSquare.isOccupied()){
 				xVal = r.nextInt(8);
-				yVal = Evolver.getRandomNumberInRange(startingRowsAvailable,7);
+				yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new King(co), oldSquare.WHITE);
@@ -327,11 +327,11 @@ public class Board {
 		//squares[h][7] = new Square(new Rook(co),false);
 		for(int i = 0; i<gameRules.getPawns(); i++){
 			int xVal = r.nextInt(8);
-			int yVal = Evolver.getRandomNumberInRange(startingRowsAvailable,7);
+			int yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
 			oldSquare = squares[xVal][yVal];
 			while (oldSquare.isOccupied()){
 				xVal = r.nextInt(8);
-				yVal = Evolver.getRandomNumberInRange((startingRowsAvailable ),7);
+				yVal = Evolver.getRandomNumberInRange((7-startingRowsAvailable ),7);
 				oldSquare = squares[xVal][yVal];
 			}
 			squares[xVal][yVal] = new Square(new Pawn(co), oldSquare.WHITE);
