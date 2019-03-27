@@ -27,6 +27,7 @@ public class Main {
 			writer.println("KingLostLast: " + someGame.getKingLostLast());
 			writer.println("CanStepOnDifferentColor: " + someGame.getCanStepOnDifferentColor());
 			writer.println("LossOnCheckmate: " + someGame.getLossOnCheckmate());
+			writer.println("Starting rows: " + someGame.StartingRows);
 			writer.close();//Write child rules to file
 
 		}catch (Exception x){
@@ -34,13 +35,13 @@ public class Main {
 		}
 */
 		GameRules test = new GameRules();
-		test.setPawns(8);
+		test.setPawns(1);
 		test.setKings(1);
-		test.setQueens(1);
-		test.setRooks(2);
-		test.setBishops(2);
-		test.setKnights(2);
-		test.startingRows = 1;
+		test.setQueens(2);
+		test.setRooks(0);
+		test.setBishops(0);
+		test.setKnights(4);
+		test.startingRows = 3;
 		Board testBoard = new Board(test,test.startingRows);
 		testBoard.canStepOnDifferentColor = true;
 		testBoard.lossOnCheckmate = true;
