@@ -14,7 +14,7 @@ public class Evolver {
         ArrayList<GameRules> infeasible = new ArrayList<>();
         ArrayList<GameRules> gen0 = new ArrayList<>();
         //declare how many generations to evolve for
-        int generations = 500;
+        int generations = 1000;
         float minFitness = 0.4f;
         int initialPopSize = 10;
         float[] avgInfFitness = new float[generations];
