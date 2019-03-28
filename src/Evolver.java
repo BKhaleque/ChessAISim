@@ -306,10 +306,11 @@ public class Evolver {
         GameRules game1= new GameRules();
         ArrayList<Integer> noOfPieces = new ArrayList<>();
         int startingRows = getRandomNumberInRange(0,3);
+        game1.startingRows = startingRows;
         int pieces = 0;
-        int totalSpaces = 15;
+        int totalSpaces = (8*startingRows)-1;
 
-        for(int i =0; i<5; i++){
+        for(int i =0; i<6; i++){
             if(totalSpaces<=0){
                 noOfPieces.add(0);
                 continue;
@@ -320,12 +321,12 @@ public class Evolver {
 
         }
 
-        game1.setKings(1);
-        game1.setPawns(noOfPieces.get(0));
-        game1.setQueens(noOfPieces.get(1));
-        game1.setKnights(noOfPieces.get(2));
-        game1.setRooks(noOfPieces.get(3));
-        game1.setBishops(noOfPieces.get(4));
+        game1.setKings(noOfPieces.get(0));
+        game1.setPawns(noOfPieces.get(1));
+        game1.setQueens(noOfPieces.get(2));
+        game1.setKnights(noOfPieces.get(3));
+        game1.setRooks(noOfPieces.get(4));
+        game1.setBishops(noOfPieces.get(5));
         if (getRandomNumberInRange(0,1) == 1)
             game1.setCanStepOnDifferentColor(true);
         else

@@ -15,10 +15,11 @@ public class GameRules {
    // boolean paralysedOnAttack;
     boolean feasible;
     float fitness;
+    public int startingRows;
 
     float probability;
 
-    public int startingRows;
+    //public int startingRows;
 
     public GameRules(int pawns, int queens, int knights, int rooks, int bishops, boolean canStepOnDifferntColor, boolean lossOnCheckmate, boolean kingLostLast, boolean paralysedOnAttack, boolean feasible) {
         this.pawns = pawns;

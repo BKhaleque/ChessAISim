@@ -13,7 +13,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-/*
+
 		Evolver e = new Evolver();
 		GameRules someGame =e.evolve(); //get final evolved child
 
@@ -27,22 +27,22 @@ public class Main {
 			writer.println("KingLostLast: " + someGame.getKingLostLast());
 			writer.println("CanStepOnDifferentColor: " + someGame.getCanStepOnDifferentColor());
 			writer.println("LossOnCheckmate: " + someGame.getLossOnCheckmate());
-			writer.println("Starting rows: " + someGame.StartingRows);
+			writer.println("Starting rows: " + someGame.startingRows);
 			writer.close();//Write child rules to file
 
 		}catch (Exception x){
 			System.out.println("Could not write to file!");
 		}
-*/
+
 		GameRules test = new GameRules();
-		test.setPawns(1);
+		test.setPawns(6);
 		test.setKings(1);
-		test.setQueens(2);
+		test.setQueens(1);
 		test.setRooks(0);
-		test.setBishops(0);
+		test.setBishops(2);
 		test.setKnights(4);
 		test.startingRows = 3;
-		Board testBoard = new Board(test,test.startingRows);
+		Board testBoard = new Board(someGame,someGame.startingRows);
 		testBoard.canStepOnDifferentColor = true;
 		testBoard.lossOnCheckmate = true;
 		testBoard.kingLostLast = false;
