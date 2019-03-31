@@ -24,6 +24,7 @@ public class Main {
 			writer.println("Bishops: " + someGame.getBishops());
 			writer.println("Rooks: " + someGame.getRooks());
 			writer.println("Queens: " + someGame.getQueens());
+			writer.println("Kings: " + someGame.getKings());
 			writer.println("KingLostLast: " + someGame.getKingLostLast());
 			writer.println("CanStepOnDifferentColor: " + someGame.getCanStepOnDifferentColor());
 			writer.println("LossOnCheckmate: " + someGame.getLossOnCheckmate());
