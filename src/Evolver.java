@@ -564,6 +564,16 @@ public class Evolver {
                 }else {
                     child.startingRows--;
                 }
+                break;
+            case 10:
+                if(random.nextInt(2) == 1 && child.totalPieces < (child.startingRows*8)-1) {
+                    child.setKings(child.getKings() + 1);
+                    break;
+                }else if(child.getKnights()>0) {
+                    child.setKings(child.getKings() - 1);
+                    break;
+                }
+
 
 
 
