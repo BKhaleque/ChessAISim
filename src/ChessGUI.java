@@ -98,9 +98,9 @@ public class ChessGUI {
         final List<TilePanel> tiles = new ArrayList<>();
         BoardPanel(){
             super( new GridLayout(rows,cols));
-            for(int i = 7; i>=0;i--) {
+            for(int i = cols; i>=0;i--) {
                 //row++;
-                for (int j = 0; j <8; j++) {
+                for (int j = 0; j <rows; j++) {
                     final TilePanel tp = new TilePanel(this, i);
                     this.tiles.add(tp);
                     tp.assignColor(j);

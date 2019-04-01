@@ -13,7 +13,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-
+		
 		Evolver e = new Evolver();
 		GameRules someGame =e.evolve(); //get final evolved child
 
