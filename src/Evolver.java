@@ -440,8 +440,8 @@ public class Evolver {
 
         //Mutate after crossover with prob 1/N
 
-        for(int i =0; i <10; i++){
-            if(randomGenerator.nextInt(4) == 1){
+        for(int i =0; i <=10; i++){
+            if(randomGenerator.nextInt(8) == 1){
                 mutate(i,child);
             }
         }
@@ -558,14 +558,14 @@ public class Evolver {
                     child.kingLostLast = true;
                 }                break;
 
-            case 9:
+            case 8:
                 if(child.startingRows <3){
                     child.startingRows++;
                 }else {
                     child.startingRows--;
                 }
                 break;
-            case 10:
+            case 9:
                 if(random.nextInt(2) == 1 && child.totalPieces < (child.startingRows*8)-1) {
                     child.setKings(child.getKings() + 1);
                     break;
