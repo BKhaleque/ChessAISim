@@ -8,15 +8,15 @@ public class Evolver {
 
 
 
-    public GameRules evolve() {
+    public GameRules evolve(int generations, int initialPopSize) {
         //Declare arraylist population of feasible and infeasible game objects
         ArrayList<GameRules> feasible = new ArrayList<>();
         ArrayList<GameRules> infeasible = new ArrayList<>();
         ArrayList<GameRules> gen0 = new ArrayList<>();
         //declare how many generations to evolve for
-        int generations = 1000;
+        //int generations = 1000;
         float minFitness = 0.4f;
-        int initialPopSize = 10;
+       // int initialPopSize = 10;
         float[] avgInfFitness = new float[generations];
         float[] avgFeasFitness = new float[generations];
         System.out.println("Making initial pop!");

@@ -3,7 +3,7 @@
  */
 
 import java.io.PrintWriter;
-
+import java.util.Scanner;
 
 /**
  * @author Gunnar Atli
@@ -13,9 +13,14 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the number of generations you would like to evolve for:");
+		int generations = sc.nextInt();
+		System.out.println("Please enter the size of the initial population:");
+		int popSize = sc.nextInt();
+
 		Evolver e = new Evolver();
-		GameRules someGame =e.evolve(); //get final evolved child
+		GameRules someGame =e.evolve(generations,popSize); //get final evolved child
 
 		try{
 			PrintWriter writer = new PrintWriter("rules.txt", "UTF-8");
