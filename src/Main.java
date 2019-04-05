@@ -20,7 +20,7 @@ public class Main {
 		//int popSize = sc.nextInt();
 
 		Evolver e = new Evolver();
-		GameRules someGame =e.evolve(1000,20); //get final evolved child
+		GameRules someGame =e.evolve(1000,10); //get final evolved child
 
 		try{
 			PrintWriter writer = new PrintWriter("rules.txt", "UTF-8");
