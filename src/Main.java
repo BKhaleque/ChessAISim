@@ -5,10 +5,12 @@
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-/**
- * @author Gunnar Atli
- *
- */
+
+/*
+*@startuml
+*
+* @enduml
+*/
 public class Main {
 	
 	public static void main(String[] args) {
@@ -20,7 +22,7 @@ public class Main {
 		//int popSize = sc.nextInt();
 
 		Evolver e = new Evolver();
-		GameRules someGame =e.evolve(1000,10); //get final evolved child
+		GameRules someGame =e.evolve(100,10); //get final evolved child
 
 		try{
 			PrintWriter writer = new PrintWriter("rules.txt", "UTF-8");
@@ -60,7 +62,7 @@ public class Main {
 		//		System.out.println("Y: " + squares[i][j].getY());
 		//	}
 		//}
-		new ChessGUI(testBoard,8,8);
+		new ChessGUI(testBoard,7,7);
 
 
 }

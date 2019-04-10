@@ -199,13 +199,11 @@ public class Evolver {
         //if the player loses a lot of pieces quickly
         //play with a mix of strong and weap bots, strong vs strong must be more ven, weak vs strong must favour strong
         //maybe view move list each turn determine avg number of actions through all turns, higher avg determines higher ftiness
-        int iter = 4;
-        float player1Score = 0;
+        int iter = 6;
         int draw = 0;
         int whiteWins = 0;
         int blackWins = 0;
         float fitness = 0;
-        int numPieces = 0;
         gameRules.totalPieces =0;
         gameRules.totalPieces += gameRules.getBishops();
         gameRules.totalPieces += gameRules.getPawns();
@@ -223,17 +221,17 @@ public class Evolver {
            // System.out.println("creating board...");
 
             Board board = new Board(gameRules,gameRules.startingRows);
-
+            int startNumPieces = checkNumPieces(board);
             long startTime = System.currentTimeMillis();
-            long maxTime = startTime + 15*1000;
+            long maxTime = startTime + 15*100;
             board.kingLostLast = gameRules.kingLostLast;
             board.canStepOnDifferentColor = gameRules.canStepOnDifferentColor;
             board.lossOnCheckmate = gameRules.lossOnCheckmate;
 
             System.out.println("Playing!");
-            Player player1 = new AlphaBetaPlayer(Piece.WHITE,1);
+            Player player1 = new AlphaBetaPlayer(Piece.WHITE,2);
             //Player player2 = new RandomPlayer(Piece.BLACK);
-            Player player2 = new AlphaBetaPlayer(Piece.BLACK,1);
+            Player player2 = new AlphaBetaPlayer(Piece.BLACK,2);
             //Player player2 = new DeterministicPlayer(Piece.BLACK);
            // int noOfMoves = 0;
             int winner = play(player1, player2, board, gameRules);
@@ -245,20 +243,20 @@ public class Evolver {
            // }
 
             if(winner == 1)
-                player1Score++;
             whiteWins++;
              if(winner == 0) {
-                player1Score += 0.5f;
                 draw++;
             }else {
-                player1Score--;
                 blackWins ++;
                  long endTime = System.currentTimeMillis() -startTime;
                  if (endTime <10000){
                      fitness +=0.05;
                  }     }
 
-            numPieces = checkNumPieces(board);
+           int endnumPieces = checkNumPieces(board);
+             if(endnumPieces ==startNumPieces){
+                 fitness -= 0.1;
+             }
                        if(MinimaxAlphaBeta.killerMoves> 3){
                            fitness -=0.1;
                        }else

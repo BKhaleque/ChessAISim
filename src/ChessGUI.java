@@ -29,6 +29,7 @@ public class ChessGUI {
     private AlphaBetaPlayer opponent = new AlphaBetaPlayer(Piece.BLACK,0);
     private   int rows;
     private   int cols;
+    boolean sucessfulMove;
 
 
 
@@ -97,10 +98,10 @@ public class ChessGUI {
     private class BoardPanel extends JPanel{
         final List<TilePanel> tiles = new ArrayList<>();
         BoardPanel(){
-            super( new GridLayout(rows,cols));
+            super( new GridLayout(8,8));
             for(int i = cols; i>=0;i--) {
                 //row++;
-                for (int j = 0; j <rows; j++) {
+                for (int j = 0; j <8; j++) {
                     final TilePanel tp = new TilePanel(this, i);
                     this.tiles.add(tp);
                     tp.assignColor(j);
@@ -142,7 +143,7 @@ public class ChessGUI {
 
                     //human player is white, only allow mouse clicks when current colour is white
                     if (currentColor == Piece.WHITE) {
-
+                        sucessfulMove = false;
 
                         if (isRightMouseButton(e)) {
                             //on first click
@@ -163,15 +164,20 @@ public class ChessGUI {
                                 if (checkIfValidMove(source, move)) {
                                     board.makeMove(move);
                                     System.out.println("Valid move!");
-                                } else
+                                    sucessfulMove = true;
+                                } else{
                                     System.out.println("Invalid move");
+
+                                }
 
 
                                 source = null;
                                 dest = null;
                                 movedPiece = null;
+                                if(sucessfulMove){
+                                    currentColor = Piece.BLACK;
 
-                                currentColor = Piece.BLACK;
+                                }
                                 if(board.isCheck(currentColor) && board.getMoves(currentColor).size() == 0){
                                     System.out.println("Game over black has lost!");
                                     System.exit(0);
