@@ -45,6 +45,7 @@ public class Evolver {
             }
             if(gen0.get(i).fitness <= minFitness){
                 infeasible.add(gen0.get(i));
+
             }
         }
 
@@ -65,7 +66,11 @@ public class Evolver {
             }
             while ( infeasible.size() <2){
                 GameRules gameRules = generateGame();
-                infeasible.add(gameRules);
+                if(determineFitness(gameRules)<minFitness){ //check if game is actually infeasible
+                    infeasible.add(gameRules);
+                }else {
+                    continue;
+                }
             }
 
             for(int z = 0; z<initialPopSize; z++) {
@@ -197,7 +202,6 @@ public class Evolver {
     public float determineFitness(GameRules gameRules){
         //add piece count  stable piece count higher fitness
         //if the player loses a lot of pieces quickly
-        //play with a mix of strong and weap bots, strong vs strong must be more ven, weak vs strong must favour strong
         //maybe view move list each turn determine avg number of actions through all turns, higher avg determines higher ftiness
         int iter = 6;
         int draw = 0;
@@ -223,7 +227,8 @@ public class Evolver {
             Board board = new Board(gameRules,gameRules.startingRows);
             int startNumPieces = checkNumPieces(board);
             long startTime = System.currentTimeMillis();
-            long maxTime = startTime + 15*100;
+            long minTime = 1000;
+            long maxTime = 10000;
             board.kingLostLast = gameRules.kingLostLast;
             board.canStepOnDifferentColor = gameRules.canStepOnDifferentColor;
             board.lossOnCheckmate = gameRules.lossOnCheckmate;
@@ -249,18 +254,23 @@ public class Evolver {
             }else {
                 blackWins ++;
                  long endTime = System.currentTimeMillis() -startTime;
-                 if (endTime <10000){
-                     fitness +=0.05;
-                 }     }
+                 if (endTime <maxTime && endTime >minTime){
+                     fitness +=0.1;
+                 }     else {
+                     fitness -=0.1;
+                 }
+             }
 
            int endnumPieces = checkNumPieces(board);
              if(endnumPieces ==startNumPieces){
                  fitness -= 0.1;
+             }else if(endnumPieces < startNumPieces ) {
+
              }
-                       if(MinimaxAlphaBeta.killerMoves> 3){
-                           fitness -=0.1;
-                       }else
-                           fitness+=0.1;
+             if(MinimaxAlphaBeta.killerMoves> 3){
+                 fitness -=0.1;
+             }else
+                 fitness+=0.1;
             MinimaxAlphaBeta.killerMoves =0;
 
 
@@ -276,7 +286,6 @@ public class Evolver {
         if(whiteWins>blackWins||blackWins>whiteWins){
             fitness +=0.05f;
         }
-        //remember to keep a track of time
 
         //check no of killer moves
 
