@@ -1,10 +1,4 @@
-/**
- * Player <br>
- * A generic player of the konane game
- * 
- * @author James Gettinger
- * 
- */
+
 public abstract class Player {
 
 	protected boolean colour;

@@ -1,13 +1,5 @@
-/**
- * 
- */
-
 import java.util.ArrayList;
 
-/**
- * @author Gunnar Atli
- *
- */
 public class Knight extends Piece {
 
 	/**

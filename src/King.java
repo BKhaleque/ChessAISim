@@ -1,13 +1,4 @@
-/**
- * 
- */
-
 import java.util.ArrayList;
-
-/**
- * @author Gunnar Atli
- *
- */
 public class King extends Piece {
 	boolean hasMoved = false;
 

@@ -20,7 +20,7 @@ public class Main {
 		//int generations = sc.nextInt();
 		//System.out.println("Please enter the size of the initial population:");
 		//int popSize = sc.nextInt();
-
+		/*
 		Evolver e = new Evolver();
 		GameRules someGame =e.evolve(100,10); //get final evolved child
 
@@ -41,7 +41,7 @@ public class Main {
 		}catch (Exception x){
 			System.out.println("Could not write to file!");
 		}
-
+	*/
 		GameRules test = new GameRules();
 		test.setPawns(6);
 		test.setKings(1);
@@ -50,7 +50,7 @@ public class Main {
 		test.setBishops(2);
 		test.setKnights(4);
 		test.startingRows = 3;
-		Board testBoard = new Board(someGame,someGame.startingRows);
+		Board testBoard = new Board(test,test.startingRows);
 		testBoard.canStepOnDifferentColor = true;
 		testBoard.lossOnCheckmate = true;
 		testBoard.kingLostLast = false;

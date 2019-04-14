@@ -88,13 +88,13 @@ public class Evolver {
                     infeasible.add(child);
                 } //If there are no kings then a game is infeasible
 
-                if (feasibleChild.fitness  > 0.4f) {
+                if (feasibleChild.fitness  > minFitness) {
                     newFeasiblePop.add(feasibleChild);
                 } else {
                     newInfeasiblePop.add(feasibleChild);
                 }
 
-                if (infeasibleChild.fitness <= 0.4f) {
+                if (infeasibleChild.fitness <= minFitness) {
                     newFeasiblePop.add(infeasibleChild);
                 } else {
                     newInfeasiblePop.add(infeasibleChild);
@@ -234,9 +234,9 @@ public class Evolver {
             board.lossOnCheckmate = gameRules.lossOnCheckmate;
 
             System.out.println("Playing!");
-            Player player1 = new AlphaBetaPlayer(Piece.WHITE,2);
+            Player player1 = new AlphaBetaPlayer(Piece.WHITE,1);
             //Player player2 = new RandomPlayer(Piece.BLACK);
-            Player player2 = new AlphaBetaPlayer(Piece.BLACK,2);
+            Player player2 = new AlphaBetaPlayer(Piece.BLACK,1);
             //Player player2 = new DeterministicPlayer(Piece.BLACK);
            // int noOfMoves = 0;
             int winner = play(player1, player2, board, gameRules);

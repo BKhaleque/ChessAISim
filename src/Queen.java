@@ -1,18 +1,8 @@
-/**
- * 
- */
 
 import java.util.ArrayList;
 
-/**
- * @author Gunnar Atli
- *
- */
 public class Queen extends Piece {
 
-	/**
-	 * 
-	 */
 	public Queen(boolean color) {
 		super(color);
 		value = 8;

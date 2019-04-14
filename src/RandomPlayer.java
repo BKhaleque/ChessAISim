@@ -1,14 +1,7 @@
-/**
- * 
- */
 
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * @author Gunnar Atli
- *
- */
 public class RandomPlayer extends Player {
 	Random rand;
 	

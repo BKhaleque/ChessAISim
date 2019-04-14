@@ -1,12 +1,5 @@
-/**
- * 
- */
 
 
-/**
- * @author Gunnar Atli
- *
- */
 public class AlphaBetaPlayer extends Player {
 	MinimaxAlphaBeta minimax;
 	

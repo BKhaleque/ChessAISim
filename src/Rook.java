@@ -1,18 +1,8 @@
-/**
- * 
- */
 
 import java.util.ArrayList;
 
-/**
- * @author Gunnar Atli
- *
- */
 public class Rook extends Piece {
 
-	/**
-	 * 
-	 */
 	public Rook(boolean color) {
 		super(color);
 		value = 5;

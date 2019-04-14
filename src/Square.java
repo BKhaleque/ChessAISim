@@ -1,11 +1,4 @@
-/**
- * 
- */
 
-/**
- * @author Gunnar Atli
- *
- */
 public class Square {
 	private boolean occupied;
 	private Piece piece;
@@ -13,9 +6,6 @@ public class Square {
 	private int x;
 	private int y;
 
-	/**
-	 * 
-	 */
 	public Square(boolean WHITE) {
 		occupied = false;
 		this.WHITE = WHITE;

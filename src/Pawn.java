@@ -1,21 +1,12 @@
-/**
- * 
- */
 
 import java.util.ArrayList;
 
-/**
- * @author Gunnar Atli 
- *
- */
+
 public class Pawn extends Piece {
 
-	/**
-	 * 
-	 */
 
-	public boolean firstMove;
-	public Pawn(boolean color) {
+	private boolean firstMove;
+	private Pawn(boolean color) {
 		super(color);
 		firstMove = true;
 		value = 1;
