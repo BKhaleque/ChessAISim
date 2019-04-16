@@ -6,7 +6,8 @@ public class Pawn extends Piece {
 
 
 	private boolean firstMove;
-	private Pawn(boolean color) {
+
+	public Pawn(boolean color) {
 		super(color);
 		firstMove = true;
 		value = 1;

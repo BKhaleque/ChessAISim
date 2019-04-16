@@ -68,11 +68,13 @@ public class ChessGUI {
     */
     }
 
+
     private JMenuBar popMenuBar(){
         final JMenuBar tableMenuBar = new JMenuBar();
-        tableMenuBar.add(createFileMenu());
+        //tableMenuBar.add(createFileMenu());
         return tableMenuBar;
     }
+
 
     private JMenu createFileMenu(){
         final JMenu fileMenu = new JMenu("File");
@@ -291,11 +293,13 @@ public class ChessGUI {
                             //System.out.println(board.toString());
                             if(board.getSquare(this.row,this.col).getPiece().getColour() ){
                                 final BufferedImage img = ImageIO.read(new File(chessImgPath + "white_"+board.getSquare(this.row,this.col).getPiece().toString() + ".png") );
-                                add(new JLabel(new ImageIcon(img)));
+                                Image resizedImg = img.getScaledInstance(30,30, Image.SCALE_DEFAULT);
+                                add(new JLabel(new ImageIcon(resizedImg)));
 
                             }else {
                                 final BufferedImage img = ImageIO.read(new File(chessImgPath + "black_"+board.getSquare(this.row,this.col).getPiece().toString() + ".png") );
-                                add(new JLabel(new ImageIcon(img)));
+                                Image resizedImg = img.getScaledInstance(30,30, Image.SCALE_DEFAULT);
+                                add(new JLabel(new ImageIcon(resizedImg)));
 
                             }
                         }catch (IOException e){

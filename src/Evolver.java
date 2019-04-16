@@ -15,7 +15,7 @@ public class Evolver {
         ArrayList<GameRules> gen0 = new ArrayList<>();
         //declare how many generations to evolve for
         //int generations = 1000;
-        float minFitness = 0.4f;
+        float minFitness = 0f;
        // int initialPopSize = 10;
         float[] avgInfFitness = new float[generations];
         float[] avgFeasFitness = new float[generations];
@@ -120,7 +120,7 @@ public class Evolver {
 
             System.out.println("The average fitness of the feasible population in generation " + i + " is " + avgFeasibleFitness);
             System.out.println("The average fitness of the infeasible population in generation " + i + " is " + avgInFeasibleFitness);
-            //if infeasible 2 low, generate random games to add to infeasible population
+            //if infeasible or infeasible pop too low, generate random games to add to infeasible population
 
 
 
@@ -203,7 +203,7 @@ public class Evolver {
         //add piece count  stable piece count higher fitness
         //if the player loses a lot of pieces quickly
         //maybe view move list each turn determine avg number of actions through all turns, higher avg determines higher ftiness
-        int iter = 6;
+        int iter = 4;
         int draw = 0;
         int whiteWins = 0;
         int blackWins = 0;
@@ -234,9 +234,9 @@ public class Evolver {
             board.lossOnCheckmate = gameRules.lossOnCheckmate;
 
             System.out.println("Playing!");
-            Player player1 = new AlphaBetaPlayer(Piece.WHITE,1);
+            Player player1 = new AlphaBetaPlayer(Piece.WHITE,2);
             //Player player2 = new RandomPlayer(Piece.BLACK);
-            Player player2 = new AlphaBetaPlayer(Piece.BLACK,1);
+            Player player2 = new AlphaBetaPlayer(Piece.BLACK,2);
             //Player player2 = new DeterministicPlayer(Piece.BLACK);
            // int noOfMoves = 0;
             int winner = play(player1, player2, board, gameRules);
@@ -278,13 +278,13 @@ public class Evolver {
         }
 
         if (blackWins == whiteWins){
-            fitness +=0.5f;
+            fitness +=0.1f;
         }
         if(draw>blackWins+whiteWins){
             fitness +=0.1f;
         }
         if(whiteWins>blackWins||blackWins>whiteWins){
-            fitness +=0.05f;
+            fitness +=0.1f;
         }
 
         //check no of killer moves
