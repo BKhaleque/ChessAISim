@@ -169,6 +169,7 @@ public class ChessGUI {
                                     sucessfulMove = true;
                                 } else{
                                     System.out.println("Invalid move");
+                                    System.out.println(source.getX()+ " "+  source.getY() + " " + dest.getX() + " " + dest.getY());
                                     source = null;
                                     dest = null;
                                     movedPiece = null;

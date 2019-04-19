@@ -14,47 +14,57 @@ import java.util.Scanner;
 public class Main {
 	
 	public static void main(String[] args) {
-
-		//Scanner sc = new Scanner(System.in);
-		//System.out.println("Please enter the number of generations you would like to evolve for:");
-		//int generations = sc.nextInt();
-		//System.out.println("Please enter the size of the initial population:");
-		//int popSize = sc.nextInt();
-
 		/*
 
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the number of generations you would like to evolve for:");
+		int generations = sc.nextInt();
+		System.out.println("Please enter the size of the initial population:");
+		int popSize = sc.nextInt();
+
+
 		Evolver e = new Evolver();
-		GameRules generatedGame =e.evolve(generations,popSize); //get final evolved child
+		GameRules someGame =e.evolve(generations,popSize); //get final evolved child
+
+		//Write child rules to file
 
 		try{
 			PrintWriter writer = new PrintWriter("rules.txt", "UTF-8");
-			writer.println("Pawns: " + generatedGame.getPawns());
-			writer.println("Knights: " + generatedGame.getKnights());
-			writer.println("Bishops: " + generatedGame.getBishops());
-			writer.println("Rooks: " + generatedGame.getRooks());
-			writer.println("Queens: " + generatedGame.getQueens());
-			writer.println("Kings: " + generatedGame.getKings());
-			writer.println("KingLostLast: " + generatedGame.getKingLostLast());
-			writer.println("CanStepOnDifferentColor: " + generatedGame.getCanStepOnDifferentColor());
-			writer.println("LossOnCheckmate: " + generatedGame.getLossOnCheckmate());
-			writer.println("Starting rows: " + generatedGame.startingRows);
-			writer.close();//Write child rules to file
+			writer.println("Pawns: " + someGame.getPawns());
+			writer.println("Knights: " + someGame.getKnights());
+			writer.println("Bishops: " + someGame.getBishops());
+			writer.println("Rooks: " + someGame.getRooks());
+			writer.println("Queens: " + someGame.getQueens());
+			writer.println("Kings: " + someGame.getKings());
+			writer.println("KingLostLast: " + someGame.getKingLostLast());
+			writer.println("LossOnCheckmate: " + someGame.getLossOnCheckmate());
+			writer.println("Starting rows: " + someGame.startingRows);
+			writer.close();
+			System.out.println("Pawns: " + someGame.getPawns());
+			System.out.println("Knights: " + someGame.getKnights());
+			System.out.println("Bishops: " + someGame.getBishops());
+			System.out.println("Queens: " + someGame.getQueens());
+			System.out.println("Kings: " + someGame.getKings());
+			System.out.println("KingLostLast: " + someGame.getKingLostLast());
+			System.out.println("LossOnCheckmate: " + someGame.getLossOnCheckmate());
+			System.out.println("Starting rows: " + someGame.startingRows);
 
 		}catch (Exception x){
 			System.out.println("Could not write to file!");
 		}
-	*/
+		*/
+
+
 
 		GameRules test = new GameRules();
-		test.setPawns(5);
+		test.setPawns(1);
 		test.setKings(1);
-		test.setQueens(3);
-		test.setRooks(0);
-		test.setBishops(0);
-		test.setKnights(0);
-		test.startingRows = 2;
+		test.setQueens(1);
+		test.setRooks(1);
+		test.setBishops(1);
+		test.setKnights(1);
+		test.startingRows = 3;
 		Board testBoard = new Board(test,test.startingRows);
-		testBoard.canStepOnDifferentColor = false;
 		testBoard.lossOnCheckmate = false;
 		testBoard.kingLostLast = false;
 
