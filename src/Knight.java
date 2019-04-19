@@ -27,91 +27,50 @@ public class Knight extends Piece {
 		// NNE
 		if(valid(x+1, y+2) && 
 				(!b.getSquare(x+1, y+2).isOccupied() ||
-						(b.getSquare(x+1, y+2).isOccupied() && b.getSquare(x+1, y+2).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
+						(b.getSquare(x+1, y+2).isOccupied() && b.getSquare(x+1, y+2).getPiece().getColour() != color)))
 			moves.add(new Move(x,y,x+1, y+2));
 
-		if(valid(x+1, y+2) &&
-				(!b.getSquare(x+1, y+2).isOccupied() ||
-						(b.getSquare(x+1, y+2).isOccupied() && b.getSquare(x+1, y+2).getPiece().getColour() != color)) && b.canStepOnDifferentColor && b.getSquare(x+1, y+2).WHITE == color)
-			moves.add(new Move(x,y,x+1, y+2));
-		
 		// ENE
-		if(valid(x+2, y+1) && 
-				(!b.getSquare(x+2, y+1).isOccupied() ||
-						(b.getSquare(x+2, y+1).isOccupied() && b.getSquare(x+2, y+1).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
-			moves.add(new Move(x,y,x+2, y+1));
-
 		if(valid(x+2, y+1) &&
 				(!b.getSquare(x+2, y+1).isOccupied() ||
-						(b.getSquare(x+2, y+1).isOccupied() && b.getSquare(x+2, y+1).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x+2, y+1).WHITE == color)
+						(b.getSquare(x+2, y+1).isOccupied() && b.getSquare(x+2, y+1).getPiece().getColour() != color)))
 			moves.add(new Move(x,y,x+2, y+1));
-		
-		// ESE
-		if(valid(x+2,y-1) && 
-				(!b.getSquare(x+2,y-1).isOccupied() ||
-						(b.getSquare(x+2,y-1).isOccupied() && b.getSquare(x+2,y-1).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
-			moves.add(new Move(x,y,x+2,y-1));
 
+		// ESE
 		if(valid(x+2,y-1) &&
 				(!b.getSquare(x+2,y-1).isOccupied() ||
-						(b.getSquare(x+2,y-1).isOccupied() && b.getSquare(x+2,y-1).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x+2,y-1).WHITE == color)
+						(b.getSquare(x+2,y-1).isOccupied() && b.getSquare(x+2,y-1).getPiece().getColour() != color)))
 			moves.add(new Move(x,y,x+2,y-1));
-		
-		
+
+
 		// SSE
-		if(valid(x+1,y-2) && 
-				(!b.getSquare(x+1,y-2).isOccupied() ||
-						(b.getSquare(x+1,y-2).isOccupied() && b.getSquare(x+1,y-2).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
-			moves.add(new Move(x,y,x+1,y-2));
 		if(valid(x+1,y-2) &&
 				(!b.getSquare(x+1,y-2).isOccupied() ||
-						(b.getSquare(x+1,y-2).isOccupied() && b.getSquare(x+1,y-2).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x+1,y-2).WHITE == color)
+						(b.getSquare(x+1,y-2).isOccupied() && b.getSquare(x+1,y-2).getPiece().getColour() != color)))
 			moves.add(new Move(x,y,x+1,y-2));
-		
-		// SSW
-		if(valid(x-1,y-2) && 
-				(!b.getSquare(x-1,y-2).isOccupied() ||
-						(b.getSquare(x-1,y-2).isOccupied() && b.getSquare(x-1,y-2).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
-			moves.add(new Move(x,y,x-1,y-2));
 
+		// SSW
 		if(valid(x-1,y-2) &&
 				(!b.getSquare(x-1,y-2).isOccupied() ||
-						(b.getSquare(x-1,y-2).isOccupied() && b.getSquare(x-1,y-2).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x-1,y-2).WHITE == color)
+						(b.getSquare(x-1,y-2).isOccupied() && b.getSquare(x-1,y-2).getPiece().getColour() != color)))
 			moves.add(new Move(x,y,x-1,y-2));
 
-
 		// WSW
-		if(valid(x-2,y-1) && 
-				(!b.getSquare(x-2,y-1).isOccupied() ||
-						(b.getSquare(x-2,y-1).isOccupied() && b.getSquare(x-2,y-1).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
-			moves.add(new Move(x,y,x-2,y-1));
-
 		if(valid(x-2,y-1) &&
 				(!b.getSquare(x-2,y-1).isOccupied() ||
-						(b.getSquare(x-2,y-1).isOccupied() && b.getSquare(x-2,y-1).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x-2,y-1).WHITE ==color)
+						(b.getSquare(x-2,y-1).isOccupied() && b.getSquare(x-2,y-1).getPiece().getColour() != color)))
 			moves.add(new Move(x,y,x-2,y-1));
 
 		// WNW
-		if(valid(x-2,y+1) && 
-				(!b.getSquare(x-2,y+1).isOccupied() ||
-						(b.getSquare(x-2,y+1).isOccupied() && b.getSquare(x-2,y+1).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
-			moves.add(new Move(x,y,x-2,y+1));
-
 		if(valid(x-2,y+1) &&
 				(!b.getSquare(x-2,y+1).isOccupied() ||
-						(b.getSquare(x-2,y+1).isOccupied() && b.getSquare(x-2,y+1).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x-2,y+1).WHITE == color)
+						(b.getSquare(x-2,y+1).isOccupied() && b.getSquare(x-2,y+1).getPiece().getColour() != color)))
 			moves.add(new Move(x,y,x-2,y+1));
 
-
 		// NNW
-		if(valid(x-1,y+2) && 
-				(!b.getSquare(x-1,y+2).isOccupied() ||
-						(b.getSquare(x-1,y+2).isOccupied() && b.getSquare(x-1,y+2).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
-			moves.add(new Move(x,y,x-1,y+2));
-
 		if(valid(x-1,y+2) &&
 				(!b.getSquare(x-1,y+2).isOccupied() ||
-						(b.getSquare(x-1,y+2).isOccupied() && b.getSquare(x-1,y+2).getPiece().getColour() != color)) && b.canStepOnDifferentColor && b.getSquare(x-1,y+2).WHITE == color)
+						(b.getSquare(x-1,y+2).isOccupied() && b.getSquare(x-1,y+2).getPiece().getColour() != color)))
 			moves.add(new Move(x,y,x-1,y+2));
 		
 		return moves;

@@ -230,7 +230,6 @@ public class Evolver {
             long minTime = 1000;
             long maxTime = 10000;
             board.kingLostLast = gameRules.kingLostLast;
-            board.canStepOnDifferentColor = gameRules.canStepOnDifferentColor;
             board.lossOnCheckmate = gameRules.lossOnCheckmate;
 
             System.out.println("Playing!");
@@ -334,10 +333,6 @@ public class Evolver {
         game1.setKnights(noOfPieces.get(3));
         game1.setRooks(noOfPieces.get(4));
         game1.setBishops(noOfPieces.get(5));
-        if (getRandomNumberInRange(0,1) == 1)
-            game1.setCanStepOnDifferentColor(true);
-        else
-            game1.setCanStepOnDifferentColor(false);
 
         if (getRandomNumberInRange(0,1) == 1)
             game1.setLossOnCheckmate(true);
@@ -482,19 +477,16 @@ public class Evolver {
                 child.setBishops(parent.getBishops());
                 break;
             case 5:
-                child.setCanStepOnDifferentColor(parent.getCanStepOnDifferentColor());
-                break;
-            case 6:
                 child.setLossOnCheckmate(parent.getLossOnCheckmate());
                 break;
-            case 7:
+            case 6:
                 child.setKingLostLast(parent.getKingLostLast());
                 break;
 
-            case 8:
+            case 7:
                 child.setStartingRows(parent.getStartingRows());
                 break;
-            case 9:
+            case 8:
                 child.setKings(parent.getKings());
                 break;
         }
@@ -545,13 +537,7 @@ public class Evolver {
                     child.setBishops(child.getBishops() -1);
                     break;
                 }
-            case 5:
-                if(child.canStepOnDifferentColor){
-                    child.canStepOnDifferentColor = false;
-                }else{
-                    child.canStepOnDifferentColor = true;
-                }
-                break;
+
             case 6:
                 if(child.lossOnCheckmate){
                     child.lossOnCheckmate = false;

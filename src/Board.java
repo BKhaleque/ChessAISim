@@ -347,7 +347,7 @@ public class Board {
 		//Board b = new Board();
 		//System.out.println(b);
 	//}
-	
+
 	public String toString() {
 		String str = "";
 		for(int i = 7; i >= 0; i--) {
@@ -357,20 +357,20 @@ public class Board {
 			}
 			str += "\n";
 		}
-		
+
 		str += "\n   a b c d e f g h";
-		
+
 		return str;
 	}
-	
+
 	public ArrayList<Move> getMoves(boolean colour) {
 		return getMoves(colour, true);
 	}
-	
-	
+
+
 	/**
 	 * Checks if player colour is under check
-	 * 
+	 *
 	 * @param colour
 	 * @return
 	 */
@@ -402,24 +402,24 @@ public class Board {
 		}
 		// check a move if after making this move the king can be killed (moving into check)
 		ArrayList<Move> opponentMoves = getMoves(!colour, false);
-		
+
 		// check all opponent moves if they kill king (opponent moves in next round)
 		for(int j = 0; j < opponentMoves.size(); j++) {
 			if(opponentMoves.get(j).getX2() == x && opponentMoves.get(j).getY2() == y)
 				return true;
 		}
-		
-		return false;	
+
+		return false;
 	}
-	
+
 	/**
 	 * Checks if player colour is under check
-	 * 
+	 *
 	 * @param colour
 	 * @return
 	 */
 	public boolean isCheckAfter(boolean colour, ArrayList<Move> moves) {
-		
+
 		Square[][] newSquares = getSquaresAfter(moves);
 
 		if(kingLostLast){
@@ -442,22 +442,22 @@ public class Board {
 					x = i; y = j;
 				}
 			}
-		
+
 		// check a move if after making this move the king can be killed (moving into check)
 		ArrayList<Move> opponentMoves = getMovesAfter(!colour, moves, false);
-		
+
 		// check all opponent moves if they kill king (opponent moves in next round)
 		for(int j = 0; j < opponentMoves.size(); j++) {
 			if(opponentMoves.get(j).getX2() == x && opponentMoves.get(j).getY2() == y)
 				return true;
 		}
-		
-		return false;	
+
+		return false;
 	}
-	
+
 	public ArrayList<Move> getMoves(boolean colour, boolean checkCheck) {
 		ArrayList<Move> moves = new ArrayList<Move>();
-		
+
 		for(int i = 0; i < 8; i++)
 			for(int j = 0; j < 8; j++) {
 				if(squares[i][j].isOccupied() &&
@@ -465,7 +465,7 @@ public class Board {
 					moves.addAll(squares[i][j].getPiece().getMoves(this, i, j));
 				}
 			}
-		
+
 		// check if move is valid (must not be check after move) and throw away erroneous moves
 		if(checkCheck) {
 			// find king (of correct colour)
@@ -478,38 +478,38 @@ public class Board {
 						x = i; y = j;
 					}
 				}
-			
+
 			ArrayList<Move> removeThese = new ArrayList<Move>();
 			for(int i = 0; i < moves.size(); i++) {
 				// check a move if after making this move the king can be killed (moving into check)
 				ArrayList<Move> checkThis = new ArrayList<Move>(moves.subList(i, i+1));
 				ArrayList<Move> opponentMoves = getMovesAfter(!colour, checkThis, false);
-				
+
 				int xUpdated = x, yUpdated = y;
 				if(checkThis.get(0).getX1() == x && checkThis.get(0).getY1() == y) { // get updated king position
 					xUpdated = checkThis.get(0).getX2();
 					yUpdated = checkThis.get(0).getY2();
 				}
-				
+
 				// check all opponent moves if they kill king (opponent moves in next round)
 				for(int j = 0; j < opponentMoves.size(); j++) {
 					if(opponentMoves.get(j).getX2() == xUpdated && opponentMoves.get(j).getY2() == yUpdated)
 						removeThese.add(checkThis.get(0));
 				}
 			}
-			
+
 			moves.removeAll(removeThese); // remove invalid moves
 		}
-		
+
 		return moves;
 	}
-	
+
 	public ArrayList<Move> getMovesAfter(boolean color, ArrayList<Move> moves) {
 		return getMovesAfter(color, moves, true);
 	}
-	
+
 	public ArrayList<Move> getMovesAfter(boolean color, ArrayList<Move> moves, boolean checkCheck) {
-		
+
 		Square[][] temp = new Square[8][8];
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
@@ -518,7 +518,7 @@ public class Board {
 				temp[x][y].setY(y);
 			}
 		}
-		
+
 		Board b = new Board(temp);
 		b.kingLostLast = this.kingLostLast;
 		b.canStepOnDifferentColor = this.canStepOnDifferentColor;
@@ -526,14 +526,14 @@ public class Board {
 
 		for(int i = 0; i < moves.size(); i++)
 			b.makeMove(moves.get(i));
-		
+
 		ArrayList<Move> futureMoves = b.getMoves(color, checkCheck);
-		
+
 		return futureMoves;
 	}
-	
+
 	public Square[][] getSquaresAfter(ArrayList<Move> moves) {
-		
+
 		Square[][] temp = new Square[8][8];
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
@@ -542,7 +542,7 @@ public class Board {
 				temp[x][y].setY(y);
 			}
 		}
-		
+
 		Board b = new Board(temp);
 
 		b.kingLostLast = this.kingLostLast;
@@ -551,7 +551,7 @@ public class Board {
 
 		for(int i = 0; i < moves.size(); i++)
 			b.makeMove(moves.get(i));
-		
+
 		Square[][] temp2 = new Square[8][8];
 		for (int y = 0; y < 8; y++) {
 			for (int x = 0; x < 8; x++) {
@@ -560,10 +560,10 @@ public class Board {
 				temp2[x][y].setY(y);
 			}
 		}
-		
+
 		return temp2;
 	}
-	
+
 	/**
 	 * @param m
 	 * @return -1 if black wins

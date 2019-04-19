@@ -35,95 +35,55 @@ public class Bishop extends Piece {
 		for(int i = 1; i < 8; i++) {
 			if(valid(x+i, y+i)) {
 				if(b.getSquare(x+i, y+i).isOccupied()) {
-					if(b.getSquare(x+i, y+i).getPiece().color != color && b.canStepOnDifferentColor)
-						moves.add(new Move(x,y,x+i,y+i));	
-					
-					break;
-				}else 	if(b.getSquare(x+i, y+i).getPiece().color != color && !b.canStepOnDifferentColor){
-					if (b.getSquare(x+i, y+i).WHITE == color)
+					if(b.getSquare(x+i, y+i).getPiece().color != color)
 						moves.add(new Move(x,y,x+i,y+i));
+
 					break;
 				}
-
-				else if 	(b.canStepOnDifferentColor)
+				else
 					moves.add(new Move(x,y,x+i,y+i));
-				else {
-					if (b.getSquare(x+i, y+i).WHITE == color)
-						moves.add(new Move(x,y,x+i,y+i));
-				}
-
 			}
 		}
-		
+
 		// NW
 		for(int i = 1; i < 8; i++) {
 			if(valid(x-i, y+i)) {
 				if(b.getSquare(x-i, y+i).isOccupied()) {
-					if(b.getSquare(x-i, y+i).getPiece().color != color && b.canStepOnDifferentColor)
+					if(b.getSquare(x-i, y+i).getPiece().color != color)
 						moves.add(new Move(x,y,x-i,y+i));
 
-					break;
-				}else 	if(b.getSquare(x-i, y+i).getPiece().color != color && !b.canStepOnDifferentColor){
-					if (b.getSquare(x-i, y+i).WHITE == color)
-						moves.add(new Move(x,y,x-i,y+i));
 					break;
 				}
-
-				else if 	(b.canStepOnDifferentColor)
+				else
 					moves.add(new Move(x,y,x-i,y+i));
-				else {
-					if (b.getSquare(x-i, y+i).WHITE == color)
-						moves.add(new Move(x,y,x-i,y+i));
-				}
-
 			}
 		}
-		
+
 		// SE
 		for(int i = 1; i < 8; i++) {
 			if(valid(x+i, y-i)) {
 				if(b.getSquare(x+i, y-i).isOccupied()) {
-					if(b.getSquare(x+i, y-i).getPiece().color != color && b.canStepOnDifferentColor)
+					if(b.getSquare(x+i, y-i).getPiece().color != color)
 						moves.add(new Move(x,y,x+i,y-i));
 
-					break;
-				}else 	if(b.getSquare(x+i, y-i).getPiece().color != color && !b.canStepOnDifferentColor){
-					if (b.getSquare(x+i, y-i).WHITE == color)
-						moves.add(new Move(x,y,x+i,y-i));
 					break;
 				}
-
-				else if 	(b.canStepOnDifferentColor)
+				else
 					moves.add(new Move(x,y,x+i,y-i));
-				else {
-					if (b.getSquare(x+i, y+i).WHITE == color)
-						moves.add(new Move(x,y,x+i,y-i));
-				}
-
 			}
 		}
-		
+
 		// SW
 		for(int i = 1; i < 8; i++) {
 			if(valid(x-i, y-i)) {
 				if(b.getSquare(x-i, y-i).isOccupied()) {
-					if(b.getSquare(x-i, y-i).getPiece().color != color && b.canStepOnDifferentColor)
+					if(b.getSquare(x-i, y-i).getPiece().color != color)
 						moves.add(new Move(x,y,x-i,y-i));
 
-					break;
-				}else 	if(b.getSquare(x-i, y-i).getPiece().color != color && !b.canStepOnDifferentColor){
-					if (b.getSquare(x-i, y-i).WHITE == color)
-						moves.add(new Move(x,y,x-i,y-i));
 					break;
 				}
-
-				else if 	(b.canStepOnDifferentColor)
+				else
 					moves.add(new Move(x,y,x-i,y-i));
-				else {
-					if (b.getSquare(x-i, y-i).WHITE == color)
-						moves.add(new Move(x,y,x-i,y-i));
-				}
-
 			}
 		}
 		

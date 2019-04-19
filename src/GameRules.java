@@ -9,7 +9,6 @@ public class GameRules {
     int knights;
     int rooks;
     int bishops;
-    boolean canStepOnDifferentColor;
     boolean lossOnCheckmate;
     boolean kingLostLast;
    // boolean paralysedOnAttack;
@@ -21,13 +20,12 @@ public class GameRules {
 
     //public int startingRows;
 
-    public GameRules(int pawns, int queens, int knights, int rooks, int bishops, boolean canStepOnDifferntColor, boolean lossOnCheckmate, boolean kingLostLast, boolean paralysedOnAttack, boolean feasible) {
+    public GameRules(int pawns, int queens, int knights, int rooks, int bishops, boolean lossOnCheckmate, boolean kingLostLast, boolean paralysedOnAttack, boolean feasible) {
         this.pawns = pawns;
         this.queens = queens;
         this.knights = knights;
         this.rooks = rooks;
         this.bishops = bishops;
-        this.canStepOnDifferentColor = canStepOnDifferntColor;
         this.lossOnCheckmate = lossOnCheckmate;
         this.kingLostLast = kingLostLast;
         //this.paralysedOnAttack = paralysedOnAttack;
@@ -113,13 +111,7 @@ public class GameRules {
         this.totalPieces +=totalPieces;
     }
 
-    public Boolean getCanStepOnDifferentColor() {
-        return canStepOnDifferentColor;
-    }
 
-    public void setCanStepOnDifferentColor(Boolean canStepOnDifferentColor) {
-        this.canStepOnDifferentColor = canStepOnDifferentColor;
-    }
 
     public Boolean getLossOnCheckmate() {
         return lossOnCheckmate;
