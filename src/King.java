@@ -32,50 +32,90 @@ public class King extends Piece {
 		// N
 		if(valid(x, y+1) && 
 				(!b.getSquare(x, y+1).isOccupied() ||
-						(b.getSquare(x, y+1).isOccupied() && b.getSquare(x, y+1).getPiece().getColour() != color)))
+						(b.getSquare(x, y+1).isOccupied() && b.getSquare(x, y+1).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
+			moves.add(new Move(x,y,x,y+1));
+
+		if(valid(x, y+1) &&
+				(!b.getSquare(x, y+1).isOccupied() ||
+						(b.getSquare(x, y+1).isOccupied() && b.getSquare(x, y+1).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x, y+1).WHITE == color)
 			moves.add(new Move(x,y,x,y+1));
 		
 		// NE
 		if(valid(x+1, y+1) && 
 				(!b.getSquare(x+1, y+1).isOccupied() ||
-						(b.getSquare(x+1, y+1).isOccupied() && b.getSquare(x+1, y+1).getPiece().getColour() != color)))
+						(b.getSquare(x+1, y+1).isOccupied() && b.getSquare(x+1, y+1).getPiece().getColour() != color)) && b.canStepOnDifferentColor )
+			moves.add(new Move(x,y,x+1,y+1));
+
+		if(valid(x+1, y+1) &&
+				(!b.getSquare(x+1, y+1).isOccupied() ||
+						(b.getSquare(x+1, y+1).isOccupied() && b.getSquare(x+1, y+1).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x+1, y+1).WHITE == color)
 			moves.add(new Move(x,y,x+1,y+1));
 		
 		// E
 		if(valid(x+1,y) && 
 				(!b.getSquare(x+1,y).isOccupied() ||
-						(b.getSquare(x+1,y).isOccupied() && b.getSquare(x+1,y).getPiece().getColour() != color)))
+						(b.getSquare(x+1,y).isOccupied() && b.getSquare(x+1,y).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
 			moves.add(new Move(x,y,x+1,y));
-		
-		
+
+		if(valid(x+1,y) &&
+				(!b.getSquare(x+1,y).isOccupied() ||
+						(b.getSquare(x+1,y).isOccupied() && b.getSquare(x+1,y).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x+1, y).WHITE == color)
+			moves.add(new Move(x,y,x+1,y));
+
+
 		// SE
 		if(valid(x+1,y-1) && 
 				(!b.getSquare(x+1,y-1).isOccupied() ||
-						(b.getSquare(x+1,y-1).isOccupied() && b.getSquare(x+1,y-1).getPiece().getColour() != color)))
+						(b.getSquare(x+1,y-1).isOccupied() && b.getSquare(x+1,y-1).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
+			moves.add(new Move(x,y,x+1,y-1));
+
+		if(valid(x+1,y-1) &&
+				(!b.getSquare(x+1,y-1).isOccupied() ||
+						(b.getSquare(x+1,y-1).isOccupied() && b.getSquare(x+1,y-1).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x+1, y-1).WHITE == color)
 			moves.add(new Move(x,y,x+1,y-1));
 		
 		// S
 		if(valid(x,y-1) && 
 				(!b.getSquare(x,y-1).isOccupied() ||
-						(b.getSquare(x,y-1).isOccupied() && b.getSquare(x,y-1).getPiece().getColour() != color)))
+						(b.getSquare(x,y-1).isOccupied() && b.getSquare(x,y-1).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
 			moves.add(new Move(x,y,x,y-1));
-		
+
+		if(valid(x,y-1) &&
+				(!b.getSquare(x,y-1).isOccupied() ||
+						(b.getSquare(x,y-1).isOccupied() && b.getSquare(x,y-1).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x,y-1).WHITE == color)
+			moves.add(new Move(x,y,x,y-1));
+
 		// SW
 		if(valid(x-1,y-1) && 
 				(!b.getSquare(x-1,y-1).isOccupied() ||
-						(b.getSquare(x-1,y-1).isOccupied() && b.getSquare(x-1,y-1).getPiece().getColour() != color)))
+						(b.getSquare(x-1,y-1).isOccupied() && b.getSquare(x-1,y-1).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
 			moves.add(new Move(x,y,x-1,y-1));
-		
+
+		if(valid(x-1,y-1) &&
+				(!b.getSquare(x-1,y-1).isOccupied() ||
+						(b.getSquare(x-1,y-1).isOccupied() && b.getSquare(x-1,y-1).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x-1,y-1).WHITE == color)
+			moves.add(new Move(x,y,x-1,y-1));
+
 		// W
 		if(valid(x-1,y) && 
 				(!b.getSquare(x-1,y).isOccupied() ||
-						(b.getSquare(x-1,y).isOccupied() && b.getSquare(x-1,y).getPiece().getColour() != color)))
+						(b.getSquare(x-1,y).isOccupied() && b.getSquare(x-1,y).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
+			moves.add(new Move(x,y,x-1,y));
+
+		if(valid(x-1,y) &&
+				(!b.getSquare(x-1,y).isOccupied() ||
+						(b.getSquare(x-1,y).isOccupied() && b.getSquare(x-1,y).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x-1,y).WHITE == color)
 			moves.add(new Move(x,y,x-1,y));
 		
 		// NW
 		if(valid(x-1,y+1) && 
 				(!b.getSquare(x-1,y+1).isOccupied() ||
-						(b.getSquare(x-1,y+1).isOccupied() && b.getSquare(x-1,y+1).getPiece().getColour() != color)))
+						(b.getSquare(x-1,y+1).isOccupied() && b.getSquare(x-1,y+1).getPiece().getColour() != color)) && b.canStepOnDifferentColor)
+			moves.add(new Move(x,y,x-1,y+1));
+
+		if(valid(x-1,y+1) &&
+				(!b.getSquare(x-1,y+1).isOccupied() ||
+						(b.getSquare(x-1,y+1).isOccupied() && b.getSquare(x-1,y+1).getPiece().getColour() != color)) && !b.canStepOnDifferentColor && b.getSquare(x-1,y+1).WHITE == color)
 			moves.add(new Move(x,y,x-1,y+1));
 
 		// Castling
@@ -84,10 +124,17 @@ public class King extends Piece {
 				if(!b.getSquare(Board.f, 1-1).isOccupied() &&
 						!b.getSquare(Board.g, 1-1).isOccupied() &&
 						b.getSquare(Board.h, 1-1).isOccupied() &&
-						b.getSquare(Board.h, 1-1).getPiece().toString().equals("R"))
+						b.getSquare(Board.h, 1-1).getPiece().toString().equals("R") && b.canStepOnDifferentColor)
 					moves.add(new Move(x,y,x+2,y));
-					
-						
+
+				if(!b.getSquare(Board.f, 1-1).isOccupied() &&
+						!b.getSquare(Board.g, 1-1).isOccupied() &&
+						b.getSquare(Board.h, 1-1).isOccupied() &&
+						b.getSquare(Board.h, 1-1).getPiece().toString().equals("R") && b.canStepOnDifferentColor && !b.getSquare(Board.f, 1-1).WHITE == color &&
+						!b.getSquare(Board.g, 1-1).WHITE == color&&
+						b.getSquare(Board.h, 1-1).WHITE == color)
+					moves.add(new Move(x,y,x+2,y));
+
 			}
 			else 
 				hasMoved = true;
@@ -101,8 +148,7 @@ public class King extends Piece {
 		}
 		
 		
-		// TODO King cannot move into open fire
-		
+
 		
 		return moves;
 	}

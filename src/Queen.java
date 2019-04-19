@@ -126,7 +126,7 @@ public class Queen extends Piece {
 						moves.add(new Move(x,y,x+i,y+i));	
 					
 					break;
-				} else if(b.getSquare(x+i, y+i).isOccupied() && b.canStepOnDifferentColor){
+				} else if(b.getSquare(x+i, y+i).isOccupied() && !b.canStepOnDifferentColor){
 					if(b.getSquare(x+i, y+i).getPiece().color != color && b.getSquare(x+i, y+i).WHITE == this.color)
 						moves.add(new Move(x,y,x+i,y+i));
 

@@ -29,7 +29,6 @@ public class RandomPlayer extends Player {
 		if(n == 0)
 			return null;
 		int k = rand.nextInt(n);
-		//k = 1; // TODO remove
 		return moves.get(k);
 	}
 

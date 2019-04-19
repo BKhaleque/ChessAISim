@@ -25,13 +25,25 @@ public class Rook extends Piece {
 		for(int i = 1; i < 8; i++) {
 			if(valid(x, y+i)) {
 				if(b.getSquare(x, y+i).isOccupied()) {
-					if(b.getSquare(x, y+i).getPiece().color != color)
+					if(b.getSquare(x, y+i).getPiece().color != color && b.canStepOnDifferentColor)
 						moves.add(new Move(x,y,x,y+i));	
 					
 					break;
+				}else if(b.getSquare(x, y+i).getPiece().color != color && !b.canStepOnDifferentColor ){
+					if(b.getSquare(x, y+i).WHITE == color){
+						moves.add(new Move(x,y,x,y+i));
+					}
+					break;
 				}
-				else
-					moves.add(new Move(x,y,x,y+i));	
+
+				else if (b.canStepOnDifferentColor){
+					moves.add(new Move(x,y,x,y+i));
+
+				}else {
+					if(b.getSquare(x, y+i).WHITE == color){
+						moves.add(new Move(x,y,x,y+i));
+					}
+				}
 			}
 		}
 		

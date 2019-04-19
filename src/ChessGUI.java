@@ -221,7 +221,7 @@ public class ChessGUI {
                                 }
 
                             }
-                            board.makeMove(opponent.getNextMove(board));
+                            board.makeMove(oppMove);
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
                                 public void run() {
