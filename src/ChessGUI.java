@@ -208,6 +208,19 @@ public class ChessGUI {
 
                    }else {
                         if (isLeftMouseButton(e)) {
+                            long startTime = System.currentTimeMillis();
+
+                            Move oppMove = opponent.getNextMove(board);
+
+                            while (!checkIfValidMove(board.getSquare(oppMove.getX1(),oppMove.getY1()),oppMove)){
+                                long endTime = System.currentTimeMillis() - startTime;
+                                oppMove = opponent.getNextMove(board);
+                                if(endTime > 10000){
+                                    System.out.println("AI failing to make any valid moves, game is draw");
+                                    System.exit(0);
+                                }
+
+                            }
                             board.makeMove(opponent.getNextMove(board));
                             SwingUtilities.invokeLater(new Runnable() {
                                 @Override
@@ -294,12 +307,12 @@ public class ChessGUI {
                             if(board.getSquare(this.row,this.col).getPiece().getColour() ){
                                 final BufferedImage img = ImageIO.read(new File(chessImgPath + "white_"+board.getSquare(this.row,this.col).getPiece().toString() + ".png") );
                                 Image resizedImg = img.getScaledInstance(30,30, Image.SCALE_DEFAULT);
-                                add(new JLabel(new ImageIcon(resizedImg)));
+                                add(new JLabel(new ImageIcon(img)));
 
                             }else {
                                 final BufferedImage img = ImageIO.read(new File(chessImgPath + "black_"+board.getSquare(this.row,this.col).getPiece().toString() + ".png") );
-                                Image resizedImg = img.getScaledInstance(30,30, Image.SCALE_DEFAULT);
-                                add(new JLabel(new ImageIcon(resizedImg)));
+                               Image resizedImg = img.getScaledInstance(30,30, Image.SCALE_DEFAULT);
+                                add(new JLabel(new ImageIcon(img)));
 
                             }
                         }catch (IOException e){

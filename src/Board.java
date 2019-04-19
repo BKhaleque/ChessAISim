@@ -55,12 +55,12 @@ public class Board {
 		//create first row of board
 		for(int i = 0; i<8; i++){
 			if(i%2 == 0){
-				squares[i][0] = new Square(false);
+				squares[i][0] = new Square(true);
 				squares[i][0].setX(i);
 				squares[i][0].setY(0);
 
 			}else {
-				squares[i][0] = new Square(true);
+				squares[i][0] = new Square(false);
 
 			}
 		}
@@ -69,13 +69,13 @@ public class Board {
 
 		for(int i = 0; i <8; i++){
 			if(i%2 == 0){
-				squares[i][1] = new Square(true);
-				squares[i][1].setX(i);
-				squares[i][1].setY(0);
-			}else {
 				squares[i][1] = new Square(false);
 				squares[i][1].setX(i);
-				squares[i][1].setY(0);
+				squares[i][1].setY(1);
+			}else {
+				squares[i][1] = new Square(true);
+				squares[i][1].setX(i);
+				squares[i][1].setY(1);
 
 			}
 		}
@@ -86,12 +86,12 @@ public class Board {
             if(i%2==0){
                 for(int j = 0; j < 8; j++) {
                     if(j%2 == 0) {
-                        squares[j][i] = new Square(false);
+                        squares[j][i] = new Square(true);
                         squares[j][i].setX(j);
                         squares[j][i].setY(i);
                     }
                     else {
-                        squares[j][i] = new Square(true);
+                        squares[j][i] = new Square(false);
                         squares[j][i].setX(j);
                         squares[j][i].setY(i);
                     }
@@ -99,12 +99,12 @@ public class Board {
             }else {
                 for(int j = 0; j < 8; j++) {
                     if(j%2 == 0) {
-                        squares[j][i] = new Square(true);
+                        squares[j][i] = new Square(false);
                         squares[j][i].setX(j);
                         squares[j][i].setY(i);
                     }
                     else {
-                        squares[j][i] = new Square(false);
+                        squares[j][i] = new Square(true);
                         squares[j][i].setX(j);
                         squares[j][i].setY(i);
                     }
@@ -117,12 +117,12 @@ public class Board {
 
         for(int i = 0; i<=h; i++){
             if(i%2 == 0){
-                squares[i][7] = new Square(false);
+                squares[i][7] = new Square(true);
                 squares[i][7].setX(i);
                 squares[i][7].setY(7);
 
             }else {
-                squares[i][7] = new Square(true);
+                squares[i][7] = new Square(false);
                 squares[i][7].setX(i);
                 squares[i][7].setY(7);
             }
@@ -130,12 +130,12 @@ public class Board {
 
         for(int i = 0; i <8; i++){
             if(i%2 == 0){
-                squares[i][6] = new Square(true);
+                squares[i][6] = new Square(false);
                 squares[i][6].setX(i);
                 squares[i][6].setY(6);
 
             }else {
-                squares[i][6] = new Square(false);
+                squares[i][6] = new Square(true);
                 squares[i][6].setX(i);
                 squares[i][6].setY(6);
 
@@ -583,7 +583,7 @@ public class Board {
 		squares[m.getX1()][m.getY1()].setY(oldSquare1.getY());
 
 		if(!canStepOnDifferentColor){
-			if(squares[m.getX2()][m.getY2()].WHITE == !oldSquare1.getPiece().getColour() ){
+			if(squares[m.getX2()][m.getY2()].WHITE != oldSquare1.getPiece().getColour() ){
 				return -1;
 			}
 		}
