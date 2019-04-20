@@ -57,12 +57,12 @@ public class Main {
 
 
 		GameRules test = new GameRules();
-		test.setPawns(1);
+		test.setPawns(0);
 		test.setKings(1);
-		test.setQueens(1);
-		test.setRooks(1);
-		test.setBishops(1);
-		test.setKnights(1);
+		test.setQueens(0);
+		test.setRooks(0);
+		test.setBishops(0);
+		test.setKnights(0);
 		test.startingRows = 3;
 		Board testBoard = new Board(test,test.startingRows);
 		testBoard.lossOnCheckmate = false;

@@ -154,6 +154,7 @@ public class ChessGUI {
                             movedPiece = null;
                         } else if (isLeftMouseButton(e)) {
                             if (source == null) {
+                                //Board copy = new Board(board.getSquares());
                                 source = board.getSquare(row, col);
                                 movedPiece = source.getPiece();
                                 if (movedPiece == null) {
@@ -162,7 +163,7 @@ public class ChessGUI {
                             } else {
                                 //second click
                                 dest = board.getSquare(row, col);
-                                Move move = new Move(source.getX(), source.getY(), dest.getX(), dest.getY());
+                                Move move = new Move(source.getX(), source.getY(), row, col);
                                 if (checkIfValidMove(source, move)) {
                                     board.makeMove(move);
                                     System.out.println("Valid move!");

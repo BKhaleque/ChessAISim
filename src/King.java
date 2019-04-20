@@ -2,9 +2,6 @@ import java.util.ArrayList;
 public class King extends Piece {
 	boolean hasMoved = false;
 
-	/**
-	 * 
-	 */
 	public King(boolean color) {
 		super(color);
 		value = 0;
@@ -101,7 +98,6 @@ public class King extends Piece {
 		}
 
 
-		// TODO King cannot move into open fire
 
 		
 		return moves;

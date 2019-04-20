@@ -7,10 +7,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * @author Gunnar Atli
- *
- */
+
 public class Board {
 	public static final int a=0, b=1, c=2, d=3, e=4, f=5, g=6, h=7;
 	public boolean kingLostLast;
@@ -579,14 +576,10 @@ public class Board {
 		squares[m.getX2()][m.getY2()].setX(oldSquare2.getX());
 		squares[m.getX2()][m.getY2()].setY(oldSquare2.getY());
 		squares[m.getX1()][m.getY1()] = new Square(oldSquare1.WHITE);
-		squares[m.getX1()][m.getY1()].setX(oldSquare1.getX());
-		squares[m.getX1()][m.getY1()].setY(oldSquare1.getY());
+		squares[m.getX1()][m.getY1()].setX(m.getX1());
+		squares[m.getX1()][m.getY1()].setY(m.getY1());
 
-		if(!canStepOnDifferentColor){
-			if(squares[m.getX2()][m.getY2()].WHITE != oldSquare1.getPiece().getColour() ){
-				return -1;
-			}
-		}
+
 
 		if(m.isCastling()) {
 			if(m.getX2() == g && m.getY2() == 0) {

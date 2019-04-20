@@ -2,9 +2,6 @@ import java.util.ArrayList;
 
 public class Knight extends Piece {
 
-	/**
-	 * 
-	 */
 	public Knight(boolean color) {
 		super(color);
 		value = 3;

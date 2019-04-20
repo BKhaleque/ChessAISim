@@ -12,9 +12,7 @@ public class MinimaxAlphaBeta {
 	int maxDepth;
 	Random rand;
 	public static int killerMoves;
-	/**
-	 * 
-	 */
+
 	public MinimaxAlphaBeta(boolean colour, int maxDepth) {
 		this.colour = colour;
 		this.maxDepth = maxDepth;

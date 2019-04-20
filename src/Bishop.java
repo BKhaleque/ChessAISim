@@ -1,14 +1,9 @@
-/**
- * 
- */
+
 
 import java.util.ArrayList;
 
 
-/**
- * @author Gunnar Atli
- *
- */
+
 public class Bishop extends Piece {
 
 	public Bishop(boolean color) {
