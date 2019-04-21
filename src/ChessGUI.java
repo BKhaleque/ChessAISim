@@ -133,6 +133,8 @@ public class ChessGUI {
     private class TilePanel extends JPanel{
         private int col;
         private int row;
+        private int oldRow;
+        private  int oldCol;
 
         TilePanel(final BoardPanel bp, final int col)
         {
@@ -156,6 +158,7 @@ public class ChessGUI {
                             if (source == null) {
                                 //Board copy = new Board(board.getSquares());
                                 source = board.getSquare(row, col);
+
                                 movedPiece = source.getPiece();
                                 if (movedPiece == null) {
                                     source = null;
@@ -313,14 +316,7 @@ public class ChessGUI {
 
         }
 
-        public void highlightMoves(){
-            //for(final Move move: board.getMoves()){
-              //  if(move.getY2() == this.row && move.getX2() == this.col)
-                //{
-//
-              //  }
-           // }
-        }
+
 
 
         public int getCol() {

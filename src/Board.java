@@ -13,7 +13,7 @@ public class Board {
 	public boolean kingLostLast;
 	public boolean canStepOnDifferentColor;
 	public boolean lossOnCheckmate;
-	public ArrayList<Piece> pieces;
+	//public ArrayList<Piece> pieces;
 	public int startingRowsAvailable;
 	
 	private Square[][] squares;
@@ -51,6 +51,8 @@ public class Board {
 
 		//create first row of board
 		for(int i = 0; i<8; i++){
+
+
 			if(i%2 == 0){
 				squares[i][0] = new Square(true);
 				squares[i][0].setX(i);
@@ -58,6 +60,8 @@ public class Board {
 
 			}else {
 				squares[i][0] = new Square(false);
+				squares[i][0].setX(i);
+				squares[i][0].setY(0);
 
 			}
 		}
@@ -139,7 +143,6 @@ public class Board {
             }
         }
 		Square oldSquare;
-		//initialise rooks in random place
 		for(int i = 0; i<gameRules.getRooks(); i++){
 			int xVal = r.nextInt(8);
 			int yVal = Evolver.getRandomNumberInRange(0,startingRowsAvailable);
@@ -149,7 +152,6 @@ public class Board {
 			squares[xVal][yVal].setY(yVal);
 
 		}
-	//System.out.println("Set rooks!");
 
 		for(int i = 0; i<gameRules.getKnights(); i++){
 			int xVal = r.nextInt(8);
@@ -164,7 +166,6 @@ public class Board {
 			squares[xVal][yVal].setX(xVal);
 			squares[xVal][yVal].setY(yVal);
 		}
-		//System.out.println("set Knights!");
 
 		for(int i = 0; i<gameRules.getBishops(); i++){
 			int xVal = r.nextInt(8);
@@ -180,7 +181,6 @@ public class Board {
 			squares[xVal][yVal].setY(yVal);
 
 		}
-		//System.out.println("set Bishops!");
 
 		for(int i = 0; i<gameRules.getQueens(); i++){
 			int xVal = r.nextInt(8);
@@ -197,7 +197,6 @@ public class Board {
 			squares[xVal][yVal].setX(xVal);
 			squares[xVal][yVal].setY(yVal);
 		}
-		//System.out.println("set Queens!");
 
 
 		for(int i = 0; i<gameRules.getKings(); i++){
@@ -213,16 +212,7 @@ public class Board {
 			squares[xVal][yVal].setX(xVal);
 			squares[xVal][yVal].setY(yVal);
 		}
-		//System.out.println("set Kings!");
 
-		//squares[a][0] = new Square(new Rook(co),false);
-		//squares[b][0] = new Square(new Knight(co),true);
-		//squares[c][0] = new Square(new Bishop(co),false);
-		//squares[d][0] = new Square(new Queen(co),true);
-		//squares[e][0] = new Square(new King(co),false);
-		//squares[f][0] = new Square(new Bishop(co),true);
-		//squares[g][0] = new Square(new Knight(co),false);
-		//squares[h][0] = new Square(new Rook(co),true);
 
 		for(int i = 0; i<gameRules.getPawns(); i++){
 			int xVal = r.nextInt(8);
@@ -237,8 +227,6 @@ public class Board {
 			squares[xVal][yVal].setX(xVal);
 			squares[xVal][yVal].setY(yVal);
 		}
-	//	System.out.println("set Pawns!");
-
 
 		co = Piece.BLACK;
 
@@ -250,7 +238,6 @@ public class Board {
 			squares[xVal][yVal].setX(xVal);
 			squares[xVal][yVal].setY(yVal);
 		}
-		//System.out.println("set Rooks 2!");
 
 		for(int i = 0; i<gameRules.getKnights(); i++){
 			int xVal = r.nextInt(8);
@@ -265,8 +252,6 @@ public class Board {
 			squares[xVal][yVal].setX(xVal);
 			squares[xVal][yVal].setY(yVal);
 		}
-		//System.out.println("set Knights 2!");
-
 		for(int i = 0; i<gameRules.getBishops(); i++){
 			int xVal = r.nextInt(8);
 			int yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
@@ -280,8 +265,6 @@ public class Board {
 			squares[xVal][yVal].setX(xVal);
 			squares[xVal][yVal].setY(yVal);
 		}
-		//System.out.println("set Bishops 2!");
-
 
 		for(int i = 0; i<gameRules.getQueens(); i++){
 			int xVal = r.nextInt(8);
@@ -296,7 +279,6 @@ public class Board {
 			squares[xVal][yVal].setX(xVal);
 			squares[xVal][yVal].setY(yVal);
 		}
-	//	System.out.println("set Queens 2!");
 
 
 		for(int i = 0; i<gameRules.getKings(); i++){
@@ -312,16 +294,7 @@ public class Board {
 			squares[xVal][yVal].setX(xVal);
 			squares[xVal][yVal].setY(yVal);
 		}
-		//System.out.println("set Kings 2!");
 
-		//squares[a][7] = new Square(new Rook(co),true);
-		//squares[b][7] = new Square(new Knight(co),false);
-		//squares[c][7] = new Square(new Bishop(co),true);
-		//squares[d][7] = new Square(new Queen(co),false);
-		//squares[e][7] = new Square(new King(co),true);
-		//squares[f][7] = new Square(new Bishop(co),false);
-		//squares[g][7] = new Square(new Knight(co),true);
-		//squares[h][7] = new Square(new Rook(co),false);
 		for(int i = 0; i<gameRules.getPawns(); i++){
 			int xVal = r.nextInt(8);
 			int yVal = Evolver.getRandomNumberInRange(7-startingRowsAvailable,7);
@@ -335,15 +308,11 @@ public class Board {
 			squares[xVal][yVal].setX(xVal);
 			squares[xVal][yVal].setY(yVal);
 		}
-		//System.out.println("set Pawns 2!");
 
 	}
 
 
-	//public static void main(String[] args) {
-		//Board b = new Board();
-		//System.out.println(b);
-	//}
+
 
 	public String toString() {
 		String str = "";

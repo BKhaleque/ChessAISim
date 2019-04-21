@@ -21,11 +21,11 @@ public class MinimaxAlphaBeta {
 	
 	private float maxValue(Board b, ArrayList<Move> state, float alpha, float beta, int depth) {
 		if(depth > maxDepth)
-			return eval1(b, state, colour);
+			return eval(b, state, colour);
 		
 		ArrayList<Move> moves = b.getMovesAfter(colour, state);
 		if(moves.size() == 0) {
-			killerMoves++;
+			killerMoves++; //increment killer moves for fitness evaluation purposes
 			return Float.NEGATIVE_INFINITY;
 		}
 		for(int i = 0; i < moves.size(); i++) {
@@ -35,15 +35,9 @@ public class MinimaxAlphaBeta {
 			if(tmp > alpha) {
 				alpha = tmp;
 			}
-			
 			if(beta <= alpha)
 				break;
-			
-			//if (max >= beta)
-			//	return max;
-			
-			//if (max > alpha)
-			//	alpha = max;
+
 		}
 		
 		return alpha;
@@ -51,11 +45,11 @@ public class MinimaxAlphaBeta {
 	
 	private float minValue(Board b, ArrayList<Move> state, float alpha, float beta, int depth) {
 		if(depth > maxDepth)
-			return eval1(b, state, !colour);
+			return eval(b, state, !colour);
 		
 		ArrayList<Move> moves = b.getMovesAfter(!colour, state);
 		if(moves.size() == 0) {
-			killerMoves++;
+			killerMoves++; //increment killer moves for fitness evaluation purposes
 			return Float.POSITIVE_INFINITY;
 		}
 		for(int i = 0; i < moves.size(); i++) {
@@ -69,7 +63,6 @@ public class MinimaxAlphaBeta {
 			if(beta <= alpha)
 				break;
 
-
 		}
 		
 		return beta;
@@ -79,7 +72,7 @@ public class MinimaxAlphaBeta {
 		// get maximum move
 		
 		final ArrayList<Move> moves = b.getMoves(colour);
-		if(moves.size() == 0)
+		if(moves.size() == 0) //if moves are empty we cannot make a decision
 			return null;
  		
 		Vector<Future<Float>> costs = new Vector<>(moves.size());
@@ -134,105 +127,25 @@ public class MinimaxAlphaBeta {
 		}
  		return moves.get(maxi);
 	}
-	/*
-	public Move SingleThreadDecision(Board b) {
-		// get maximum move
-		
-		ArrayList<Move> moves = b.getMoves(colour);
-		ArrayList<Move> state = new ArrayList<Move>();
-		float[] costs = new float[moves.size()];
- 		for(int i = 0; i < moves.size(); i++) {
-			state.add(moves.get(i));
-			float tmp = minValue(b, state, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, 1);
-			costs[i] = tmp;
-			state.remove(state.lastIndexOf(moves.get(i)));
-		}
- 		
- 		// max
- 		int maxi = -1;
-		float max = Float.NEGATIVE_INFINITY;
- 		for(int i = 0; i < moves.size(); i++) {
- 			if(costs[i] >= max) {
- 				if(Math.abs(costs[i]-max) < 0.1) // add a little random element
- 					if(rand.nextBoolean())
- 						continue;
 
- 				max = costs[i];
- 				maxi = i;
- 			}
- 		}
- 		
- 		if(maxi == -1)
- 			return null;
- 		else
- 			return moves.get(maxi);
-	}
-	*/
-	/*
-	private float eval2(Board b, ArrayList<Move> moves, boolean currentColor) {
-		Square[][] squares = b.getSquaresAfter(moves);
-		
-		// check if king missing
-		boolean blackKing = false, whiteKing = false;
-		for(int i = 0; i < 8; i++)
-			for(int j = 0; j < 8; j++) {
-				if(squares[i][j].isOccupied()) {
-					if(squares[i][j].getPiece().toString().equals("K")) {
-						whiteKing = true;
-					}
-					if(squares[i][j].getPiece().toString().equals("k")) {
-						blackKing = true;
-					}
-				}
-			}
-		
-		if(colour == Piece.WHITE) {
-			if(whiteKing == false)
-				return Float.NEGATIVE_INFINITY;
-			if(blackKing == false)
-				return Float.POSITIVE_INFINITY;
-		}
-		else {
-			if(whiteKing == false)
-				return Float.POSITIVE_INFINITY;
-			if(blackKing == false)
-				return Float.NEGATIVE_INFINITY;
-		}
-
-			
-		
-		int whiteScore = 0;
-		int blackScore = 0;
-		
-		for(int i = 0; i < 8; i++)
-			for(int j = 0; j < 8; j++) {
-				if(squares[i][j].isOccupied())
-					if(squares[i][j].getPiece().getColour() == Piece.WHITE)
-						whiteScore += squares[i][j].getPiece().getValue();
-					else
-						blackScore += squares[i][j].getPiece().getValue();
-			}
-		
-		
-		if(colour == Piece.WHITE)
-			return whiteScore - blackScore;
-		else
-			return blackScore - whiteScore;
-	}
-	*/
-	
-	private float eval1(Board b, ArrayList<Move> moves, boolean currentColor) {
+	private float eval(Board b, ArrayList<Move> moves, boolean currentColor) {
 		Square[][] squares = b.getSquaresAfter(moves);
 		
 		if(b.getMoves(currentColor).size() == 0) {
 			if(b.isCheckAfter(currentColor, moves) && b.lossOnCheckmate) {
-				killerMoves++;
+				killerMoves++; //increment killer moves variable for fitness evaluation purposes
 				return (currentColor == this.colour) ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
 			}
-			else
-				return Float.NEGATIVE_INFINITY; // we don't like draws
+			else if(b.isCheckAfter(currentColor,moves) && !b.lossOnCheckmate) {
+				killerMoves++;
+				return (currentColor == this.colour) ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
+
+			}else
+				return Float.NEGATIVE_INFINITY;
+
 		}
-		
+
+		//if not end state simply count score of pieces on the board and return value
 		int whiteScore = 0;
 		int blackScore = 0;
 		
