@@ -15,3 +15,5 @@ To run follow these steps:
 6. Enter the size of the initial population.
 
 7. Keep the program running until a game is generated. This will take a while.
+
+8. Play your generated game!
