@@ -13,8 +13,6 @@ public class Evolver {
         ArrayList<GameRules> feasible = new ArrayList<>();
         ArrayList<GameRules> infeasible = new ArrayList<>();
         ArrayList<GameRules> gen0 = new ArrayList<>();
-        //declare how many generations to evolve for
-        //int generations = 1000;
         float minFitness = 0f;
        // int initialPopSize = 10;
         float[] avgInfFitness = new float[generations];
@@ -100,13 +98,6 @@ public class Evolver {
                     newInfeasiblePop.add(infeasibleChild);
                 }
 
-                //elitism checks, take only top value N, each time
-
-
-
-
-
-
             }
             newFeasiblePop.add(feasible.get(0)); //elitism carry 0th individual each time
             newInfeasiblePop.add(infeasible.get(0)); //elitism
@@ -117,17 +108,11 @@ public class Evolver {
             float avgInFeasibleFitness = determineAvgFitness(infeasible);
             avgFeasFitness[i] = avgFeasibleFitness;
             avgInfFitness[i] = avgInFeasibleFitness;
-
             System.out.println("The average fitness of the feasible population in generation " + i + " is " + avgFeasibleFitness);
             System.out.println("The average fitness of the infeasible population in generation " + i + " is " + avgInFeasibleFitness);
-            //if infeasible or infeasible pop too low, generate random games to add to infeasible population
-
-
-
-
-
         }
 
+        //pick highest fitness child
         for(int i=0; i<feasible.size(); i++){
             if(feasibleChild.fitness < feasible.get(i).fitness){
                 feasibleChild = feasible.get(i);
@@ -167,11 +152,6 @@ public class Evolver {
         }
 
             return game3;
-
-
-
-
-
 
     }
     public GameRules pickParent2(ArrayList<GameRules> pop, GameRules parent1){
@@ -234,17 +214,9 @@ public class Evolver {
 
             System.out.println("Playing!");
             Player player1 = new AlphaBetaPlayer(Piece.WHITE,2);
-            //Player player2 = new RandomPlayer(Piece.BLACK);
             Player player2 = new AlphaBetaPlayer(Piece.BLACK,2);
-            //Player player2 = new DeterministicPlayer(Piece.BLACK);
-           // int noOfMoves = 0;
+
             int winner = play(player1, player2, board, gameRules);
-           // System.out.println(board);
-            //if(noOfMoves<100 && noOfMoves >0){
-            //    fitness +=0.1f;
-           // }else {
-           //     fitness -=0.2f;
-           // }
 
             if(winner == 1)
             whiteWins++;
@@ -344,11 +316,6 @@ public class Evolver {
         else
             game1.setKingLostLast(false);
 
-       // if (getRandomNumberInRange(0,1) == 1)
-        //    game1.setParalysedOnAttack(true);
-       // else
-        //    game1.setParalysedOnAttack(false);
-
         game1.setStartingRows(startingRows);
         return game1;
 
@@ -360,11 +327,7 @@ public class Evolver {
         while(true) {
             if(turn++ > 200){
                 return 0;
-
             }
-
-          //  System.out.println("Making turn: " + turn);
-            //System.out.println(b);
             move = player1.getNextMove(b);
             if(move == null && b.isCheck(player1.getColour()) && b.lossOnCheckmate) // check and can't move
                 return -1;
@@ -376,7 +339,6 @@ public class Evolver {
                 return 0;
 
             b.makeMove(move);
-          //  System.out.println(b);
 
 
             move = player2.getNextMove(b);
@@ -403,10 +365,6 @@ public class Evolver {
                 return 0;
             }
             b.makeMove(move);
-         //   System.out.println(b);
-           // noOfMoves++;
-
-
         }
     }
 
@@ -425,8 +383,6 @@ public class Evolver {
         GameRules child = new GameRules();
         Random randomGenerator = new Random();
 
-        //random int to determine
-      //  int length1= randomGenerator.nextInt(8);
 
 
 
@@ -492,7 +448,6 @@ public class Evolver {
         }
     }
     public void mutate(int trait, GameRules child){
-        //need to adjust mutation with different values
         Random random = new Random();
         switch (trait) {
             case 0:
