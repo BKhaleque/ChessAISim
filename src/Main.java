@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Main {
 	
 	public static void main(String[] args) {
-		/*
+
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter the number of generations you would like to evolve for:");
@@ -22,9 +22,15 @@ public class Main {
 		System.out.println("Please enter the size of the initial population:");
 		int popSize = sc.nextInt();
 
+		GameRules someGame;
+
 
 		Evolver e = new Evolver();
-		GameRules someGame =e.evolve(generations,popSize); //get final evolved child
+		if(generations ==0 && popSize == 0 ){
+			someGame = e.generateGame();
+		}else {
+			someGame =e.evolve(generations,popSize); //get final evolved child
+		}
 
 		//Write child rules to file
 
@@ -52,38 +58,14 @@ public class Main {
 		}catch (Exception x){
 			System.out.println("Could not write to file!");
 		}
-		*/
 
-
-
-		GameRules test = new GameRules();
-		test.setPawns(0);
-		test.setKings(1);
-		test.setQueens(0);
-		test.setRooks(0);
-		test.setBishops(0);
-		test.setKnights(0);
-		test.startingRows = 3;
-		Board testBoard = new Board(test,test.startingRows);
+		Board testBoard = new Board(someGame,someGame.startingRows);
 		testBoard.lossOnCheckmate = false;
 		testBoard.kingLostLast = false;
 
-		Square[][] squares = testBoard.getSquares();
-		//for(int i = 0; i <8; i++){
-		//	for (int j = 0; j<8; j++){
-		//		System.out.println("X: " + squares[i][j].getX());
-		//		System.out.println("Y: " + squares[i][j].getY());
-		//	}
-		//}
 		new ChessGUI(testBoard,7,7);
 
 
 }
-	
-	/** Returns 1 if player1 wins
-	 * Returns 0 if draw
-	 * Returns -1 if player2 wins
-	 */
-
 
 }
