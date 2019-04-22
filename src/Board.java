@@ -13,7 +13,6 @@ public class Board {
 	public boolean kingLostLast;
 	public boolean canStepOnDifferentColor;
 	public boolean lossOnCheckmate;
-	//public ArrayList<Piece> pieces;
 	public int startingRowsAvailable;
 	
 	private Square[][] squares;
@@ -39,9 +38,7 @@ public class Board {
 	}
 
 	Random r = new Random();
-	/**
-	 * 
-	 */
+
 	public Board(GameRules gameRules, int startingRowsAvailable) {
 		// initialize board
 		boolean co = Piece.WHITE;

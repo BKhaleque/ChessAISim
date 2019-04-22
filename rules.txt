@@ -1,10 +1,9 @@
-Pawns: 0
-Knights: 0
+Pawns: 1
+Knights: 2
 Bishops: 0
 Rooks: 0
 Queens: 0
-Kings: 23
+Kings: 4
 KingLostLast: false
-CanStepOnDifferentColor: false
 LossOnCheckmate: false
-Starting rows: 3
+Starting rows: 1
