@@ -2,10 +2,7 @@
 
 public class AlphaBetaPlayer extends Player {
 	MinimaxAlphaBeta minimax;
-	
-	/**
-	 * @param color
-	 */
+
 	public AlphaBetaPlayer(boolean color, int maxDepth) {
 		super(color);
 		minimax = new MinimaxAlphaBeta(color, maxDepth);

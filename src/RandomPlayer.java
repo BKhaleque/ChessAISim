@@ -6,7 +6,7 @@ public class RandomPlayer extends Player {
 	Random rand;
 	
 	/**
-	 * @param colour
+	 * This class was developed for testing purposes only
 	 */
 	public RandomPlayer(boolean colour) {
 		super(colour);
