@@ -1,16 +1,8 @@
-/**
- * 
- */
 
 import java.io.PrintWriter;
 import java.util.Scanner;
 
 
-/*
-*@startuml
-*
-* @enduml
-*/
 public class Main {
 	
 	public static void main(String[] args) {

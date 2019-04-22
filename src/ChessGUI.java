@@ -71,7 +71,8 @@ public class ChessGUI {
 
     private JMenuBar popMenuBar(){
         final JMenuBar tableMenuBar = new JMenuBar();
-        //tableMenuBar.add(createFileMenu());
+        JButton btnClose = new JButton("Close");
+        btnClose.addActionListener(e -> System.exit(0));
         return tableMenuBar;
     }
 
