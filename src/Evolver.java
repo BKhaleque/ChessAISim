@@ -212,9 +212,9 @@ public class Evolver {
             board.kingLostLast = gameRules.kingLostLast;
             board.lossOnCheckmate = gameRules.lossOnCheckmate;
 
-            System.out.println("Playing!");
-            Player player1 = new AlphaBetaPlayer(Piece.WHITE,2);
-            Player player2 = new AlphaBetaPlayer(Piece.BLACK,2);
+            System.out.println("Playing iteration " + i + " out of " + iter + " iterations!");
+            Player player1 = new AlphaBetaPlayer(Piece.WHITE,0);
+            Player player2 = new AlphaBetaPlayer(Piece.BLACK,0);
 
             int winner = play(player1, player2, board, gameRules);
 
